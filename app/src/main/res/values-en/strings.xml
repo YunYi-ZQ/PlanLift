@@ -82,4 +82,15 @@
     <string name="body_fat">Body fat %</string>
     <string name="body_add">Log</string>
     <string name="body_save">Save</string>
+    <string name="sync_title">Backup &amp; sync (WebDAV)</string>
+    <string name="sync_hint">Enter your own server and credentials. For Jianguoyun use https://dav.jianguoyun.com/dav/ with an app password.</string>
+    <string name="sync_url">Server URL</string>
+    <string name="sync_user">Username / email</string>
+    <string name="sync_password">App password</string>
+    <string name="sync_dir">Remote folder</string>
+    <string name="sync_test">Test connection</string>
+    <string name="sync_now">Sync now</string>
+    <string name="sync_last">Last sync: %1$s</string>
+    <string name="debug_notify">Debug: test notification</string>
+    <string name="debug_trigger">Fire now</string>
 </resources>

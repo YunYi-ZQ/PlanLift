@@ -17,6 +17,12 @@ interface ProfileDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(profile: UserProfileEntity)
+
+    @Query("SELECT * FROM user_profile")
+    suspend fun getAll(): List<UserProfileEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<UserProfileEntity>)
 }
 
 @Dao
@@ -38,6 +44,12 @@ interface EnrollmentDao {
 
     @Query("UPDATE enrollment SET currentWeek = :week, updatedAt = :now, rev = rev + 1 WHERE id = :id")
     suspend fun setWeek(id: String, week: Int, now: Long)
+
+    @Query("SELECT * FROM enrollment")
+    suspend fun getAll(): List<EnrollmentEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<EnrollmentEntity>)
 }
 
 @Dao
@@ -68,6 +80,12 @@ interface SessionDao {
 
     @Query("SELECT MAX(date) FROM training_session WHERE deleted = 0")
     suspend fun lastTrainedAt(): Long?
+
+    @Query("SELECT * FROM training_session")
+    suspend fun getAll(): List<SessionEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<SessionEntity>)
 }
 
 @Dao
@@ -94,6 +112,9 @@ interface SetLogDao {
 
     @Query("SELECT * FROM set_log WHERE done = 1 AND deleted = 0")
     suspend fun allDoneSets(): List<SetLogEntity>
+
+    @Query("SELECT * FROM set_log")
+    suspend fun getAll(): List<SetLogEntity>
 }
 
 @Dao
@@ -104,6 +125,12 @@ interface MetricDao {
     @Query("SELECT * FROM body_metric WHERE deleted = 0 ORDER BY date DESC")
     suspend fun observeAllOnce(): List<BodyMetricEntity>
 
+    @Query("SELECT * FROM body_metric")
+    suspend fun getAll(): List<BodyMetricEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(metric: BodyMetricEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(items: List<BodyMetricEntity>)
 }

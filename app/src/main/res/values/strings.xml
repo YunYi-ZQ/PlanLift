@@ -82,4 +82,15 @@
     <string name="body_fat">体脂 %</string>
     <string name="body_add">记录</string>
     <string name="body_save">保存</string>
+    <string name="sync_title">备份与同步（WebDAV）</string>
+    <string name="sync_hint">自己填服务器地址与账号密码；坚果云填 https://dav.jianguoyun.com/dav/ 并在网页端生成应用密码</string>
+    <string name="sync_url">服务器地址</string>
+    <string name="sync_user">用户名 / 邮箱</string>
+    <string name="sync_password">应用密码</string>
+    <string name="sync_dir">远端目录</string>
+    <string name="sync_test">测试连接</string>
+    <string name="sync_now">立即同步</string>
+    <string name="sync_last">上次同步：%1$s</string>
+    <string name="debug_notify">调试：测试通知</string>
+    <string name="debug_trigger">立即触发</string>
 </resources>

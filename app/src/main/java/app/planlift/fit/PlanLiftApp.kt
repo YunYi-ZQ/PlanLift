@@ -4,6 +4,7 @@ import android.app.Application
 import app.planlift.fit.data.content.ContentRepository
 import app.planlift.fit.data.local.PlanLiftDatabase
 import app.planlift.fit.data.repo.WorkoutRepository
+import app.planlift.fit.data.sync.SyncManager
 import java.util.UUID
 
 class PlanLiftApp : Application() {
@@ -30,6 +31,7 @@ class AppContainer(app: Application) {
         content = content,
         deviceId = deviceId
     )
+    val sync = SyncManager(app, repo)
 }
 
 /** 设备标识：用于同步冲突判定，卸载重装会变（可接受）。 */

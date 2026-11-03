@@ -3,6 +3,7 @@ package app.planlift.fit.data.local
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 
 /**
  * 所有可变记录都带同步字段：updatedAt / rev / deviceId / deleted。
@@ -10,6 +11,7 @@ import androidx.room.PrimaryKey
  */
 
 @Entity(tableName = "user_profile")
+@Serializable
 data class UserProfileEntity(
     @PrimaryKey val id: String = "me",
     val sex: String,
@@ -27,6 +29,7 @@ data class UserProfileEntity(
 )
 
 @Entity(tableName = "enrollment", indices = [Index("planId")])
+@Serializable
 data class EnrollmentEntity(
     @PrimaryKey val id: String,
     val planId: String,
@@ -41,6 +44,7 @@ data class EnrollmentEntity(
 )
 
 @Entity(tableName = "training_session", indices = [Index("enrollmentId"), Index("date")])
+@Serializable
 data class SessionEntity(
     @PrimaryKey val id: String,
     val enrollmentId: String,
@@ -59,6 +63,7 @@ data class SessionEntity(
 )
 
 @Entity(tableName = "set_log", indices = [Index("sessionId")])
+@Serializable
 data class SetLogEntity(
     @PrimaryKey val id: String,
     val sessionId: String,
@@ -77,6 +82,7 @@ data class SetLogEntity(
 )
 
 @Entity(tableName = "body_metric", indices = [Index("date")])
+@Serializable
 data class BodyMetricEntity(
     @PrimaryKey val id: String,
     val date: Long,
@@ -91,6 +97,7 @@ data class BodyMetricEntity(
 )
 
 @Entity(tableName = "personal_record", indices = [Index(value = ["exerciseId"], unique = true)])
+@Serializable
 data class PersonalRecordEntity(
     @PrimaryKey val id: String,
     val exerciseId: String,

@@ -11,7 +11,9 @@ import app.planlift.fit.data.local.SessionEntity
 import app.planlift.fit.data.local.SetLogDao
 import app.planlift.fit.data.local.SetLogEntity
 import app.planlift.fit.data.local.EnrollmentDao
+import app.planlift.fit.data.sync.Snapshot
 import app.planlift.fit.domain.ProgressionEngine
+import app.planlift.fit.domain.SyncMerge
 import app.planlift.fit.domain.ProgressionTarget
 import app.planlift.fit.domain.SetPerformance
 import kotlinx.coroutines.flow.Flow
@@ -218,6 +220,72 @@ class WorkoutRepository(
 
     private fun fmt(v: Double): String =
         if (v % 1.0 == 0.0) v.toInt().toString() else v.toString()
+
+    // ---------------- 同步 ----------------
+
+    fun deviceIdValue(): String = deviceId
+
+    suspend fun collectSnapshot(): Snapshot = Snapshot(
+        rev = 0,
+        updatedAt = System.currentTimeMillis(),
+        deviceId = deviceId,
+        profiles = profileDao.getAll(),
+        enrollments = enrollmentDao.getAll(),
+        sessions = sessionDao.getAll(),
+        setLogs = setLogDao.getAll(),
+        metrics = metricDao.getAll(),
+        records = emptyList()
+    )
+
+    data class MergeStats(val localWins: Int = 0, val remoteWins: Int = 0)
+
+    /** 与远端快照逐条合并；remote 为空说明是第一次同步。 */
+    suspend fun mergeInto(local: Snapshot, remote: Snapshot?): Pair<Snapshot, MergeStats> {
+        if (remote == null) return local to MergeStats()
+
+        val profiles = SyncMerge.merge(
+            local.profiles, remote.profiles,
+            { it.id }, { it.rev }, { it.updatedAt }, { it.deviceId }
+        )
+        val enrollments = SyncMerge.merge(
+            local.enrollments, remote.enrollments,
+            { it.id }, { it.rev }, { it.updatedAt }, { it.deviceId }
+        )
+        val sessions = SyncMerge.merge(
+            local.sessions, remote.sessions,
+            { it.id }, { it.rev }, { it.updatedAt }, { it.deviceId }
+        )
+        val setLogs = SyncMerge.merge(
+            local.setLogs, remote.setLogs,
+            { it.id }, { it.rev }, { it.updatedAt }, { it.deviceId }
+        )
+        val metrics = SyncMerge.merge(
+            local.metrics, remote.metrics,
+            { it.id }, { it.rev }, { it.updatedAt }, { it.deviceId }
+        )
+
+        val stats = MergeStats(
+            localWins = profiles.localWins + enrollments.localWins + sessions.localWins +
+                setLogs.localWins + metrics.localWins,
+            remoteWins = profiles.remoteWins + enrollments.remoteWins + sessions.remoteWins +
+                setLogs.remoteWins + metrics.remoteWins
+        )
+        return local.copy(
+            profiles = profiles.merged,
+            enrollments = enrollments.merged,
+            sessions = sessions.merged,
+            setLogs = setLogs.merged,
+            metrics = metrics.merged
+        ) to stats
+    }
+
+    suspend fun applySnapshot(snapshot: Snapshot) {
+        profileDao.insertAll(snapshot.profiles)
+        enrollmentDao.insertAll(snapshot.enrollments)
+        sessionDao.insertAll(snapshot.sessions)
+        setLogDao.upsertAll(snapshot.setLogs)
+        metricDao.insertAll(snapshot.metrics)
+    }
 
     companion object {
         private val LOWER_MUSCLES = setOf("quads", "glutes", "hams", "calves")
