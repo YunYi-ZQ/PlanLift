@@ -11,8 +11,19 @@ import app.planlift.fit.data.local.SessionEntity
 import app.planlift.fit.data.local.SetLogDao
 import app.planlift.fit.data.local.SetLogEntity
 import app.planlift.fit.data.local.EnrollmentDao
+import app.planlift.fit.domain.ProgressionEngine
+import app.planlift.fit.domain.ProgressionTarget
+import app.planlift.fit.domain.SetPerformance
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
+
+data class SlotSuggestion(
+    val weightKg: Double,
+    val reps: Int,
+    val action: String,
+    val reason: String,
+    val lastSummary: String
+)
 
 class WorkoutRepository(
     private val enrollmentDao: EnrollmentDao,
@@ -108,13 +119,84 @@ class WorkoutRepository(
             }
         )
 
-        // 一周 7 天后自动进入下一周（简单推进，W2 换成按训练次数推进）
-        val weekDeadline = enrollment.startDate + enrollment.currentWeek * 7L * 24 * 3600 * 1000
-        if (now > weekDeadline && enrollment.currentWeek < plan.durationWeeks) {
-            enrollmentDao.setWeek(enrollment.id, enrollment.currentWeek + 1, now)
+        // 周次按「已完成训练次数 / 每周天数」推进，漏练不会被跳周
+        val completed = sessionDao.countByEnrollment(enrollment.id)
+        val week = ((completed / plan.daysPerWeek) + 1).coerceAtMost(plan.durationWeeks)
+        if (week != enrollment.currentWeek) {
+            enrollmentDao.setWeek(enrollment.id, week, now)
         }
         return sessionId
     }
 
     suspend fun setsOf(sessionId: String): List<SetLogEntity> = setLogDao.bySession(sessionId)
+
+    /**
+     * 为一天的每个动作算出「下次该用多重、做几次」。
+     * 依据上一次同动作的实际表现 + 目标的次数区间 / RIR。
+     */
+    suspend fun suggestionsFor(day: DayDto, sex: String): Map<String, SlotSuggestion> {
+        val exMap = content.exercises()
+        val result = mutableMapOf<String, SlotSuggestion>()
+        for (slot in day.slots.filter { !it.isBlank }) {
+            if (result.containsKey(slot.ex)) continue
+            val meta = exMap[slot.ex]
+            val lastId = setLogDao.lastSessionIdFor(slot.ex)
+            val lastSets = lastId?.let { id ->
+                setLogDao.bySession(id).filter { it.exerciseId == slot.ex && it.done }
+            } ?: emptyList()
+
+            val lower = meta?.primary in LOWER_MUSCLES
+            val machine = meta?.equipment == "machine" || meta?.equipment == "cable"
+            val inc = ProgressionEngine.increment(lower, machine, sex)
+
+            val res = ProgressionEngine.next(
+                last = lastSets.map { SetPerformance(it.weightKg, it.reps, it.rir) },
+                target = ProgressionTarget(slot.repMin, slot.repMax, slot.rir, slot.sets),
+                currentWeight = lastSets.maxOfOrNull { it.weightKg } ?: 0.0,
+                increment = inc
+            )
+            result[slot.ex] = SlotSuggestion(
+                weightKg = res.nextWeightKg,
+                reps = res.nextReps,
+                action = res.action.name,
+                reason = res.reason,
+                lastSummary = if (lastSets.isEmpty()) {
+                    "首次"
+                } else {
+                    lastSets.joinToString(", ") { "${fmt(it.weightKg)}×${it.reps}" }
+                }
+            )
+        }
+        return result
+    }
+
+    /** 最近 7 天每个肌群的正式组数 */
+    suspend fun weeklySetsByMuscle(): Map<String, Int> {
+        val since = System.currentTimeMillis() - 7L * 24 * 3600 * 1000
+        val exMap = content.exercises()
+        return setLogDao.setsSince(since)
+            .groupingBy { exMap[it.exerciseId]?.primary ?: "other" }
+            .eachCount()
+    }
+
+    /** 每个动作的 e1RM 最好成绩（按 Epley 估算），降序 */
+    suspend fun bestE1rm(): List<Triple<String, Double, SetLogEntity>> {
+        val exMap = content.exercises()
+        return setLogDao.allDoneSets()
+            .groupBy { it.exerciseId }
+            .mapNotNull { (exId, sets) ->
+                val best = sets.maxByOrNull { ProgressionEngine.e1rm(it.weightKg, it.reps) } ?: return@mapNotNull null
+                val value = ProgressionEngine.e1rm(best.weightKg, best.reps)
+                if (value <= 0.0) null
+                else Triple(exMap[exId]?.let { if (true) it.zh else it.en } ?: exId, value, best)
+            }
+            .sortedByDescending { it.second }
+    }
+
+    private fun fmt(v: Double): String =
+        if (v % 1.0 == 0.0) v.toInt().toString() else v.toString()
+
+    companion object {
+        private val LOWER_MUSCLES = setOf("quads", "glutes", "hams", "calves")
+    }
 }

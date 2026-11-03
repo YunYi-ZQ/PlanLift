@@ -56,4 +56,12 @@
     <string name="settings_next_body">Auto-progression engine (week 2), weekly set dashboard, e1RM curves, WebDAV sync (week 4).</string>
     <string name="settings_disclaimer_title">Health notice</string>
     <string name="settings_disclaimer_body">PlanLift offers training guidance only, not medical advice. Consult a doctor if you are injured, pregnant, or have cardiovascular conditions. Stop immediately if an exercise hurts.</string>
+    <string name="nav_progress">Progress</string>
+    <string name="progress_subtitle">Volume and strength over the last 7 days</string>
+    <string name="weekly_sets_title">Weekly sets by muscle</string>
+    <string name="weekly_sets_hint">Target 10–20 hard sets per muscle per week; under 10 is low, over 20 is mostly fatigue</string>
+    <string name="weekly_sets_empty">No working sets this week yet — log one and it shows up here</string>
+    <string name="e1rm_title">Strength progress</string>
+    <string name="e1rm_hint">Estimated 1RM (Epley) from your best set so far</string>
+    <string name="e1rm_empty">No data yet — finish a workout first</string>
 </resources>

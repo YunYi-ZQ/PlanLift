@@ -37,7 +37,9 @@ data class SetRow(
     val rest: Int,
     val weight: Double = 0.0,
     val reps: Int = 0,
-    val done: Boolean = false
+    val done: Boolean = false,
+    val hint: String = "",
+    val reason: String = ""
 )
 
 class WorkoutViewModel(container: AppContainer, private val dayIndex: Int) : ViewModel() {
@@ -75,8 +77,11 @@ class WorkoutViewModel(container: AppContainer, private val dayIndex: Int) : Vie
             val d = p?.days?.getOrNull(dayIndex)
             day = d
             if (d != null) {
+                val sex = if (p?.gender == "female") "female" else "male"
+                val suggestions = repo.suggestionsFor(d, sex)
                 d.slots.filter { !it.isBlank }.forEach { slot ->
                     val name = exMap[slot.ex]?.title(true) ?: slot.ex
+                    val sug = suggestions[slot.ex]
                     repeat(slot.sets) { i ->
                         rows.add(
                             SetRow(
@@ -87,7 +92,10 @@ class WorkoutViewModel(container: AppContainer, private val dayIndex: Int) : Vie
                                 target = "${slot.repMin}-${slot.repMax}",
                                 rir = slot.rir,
                                 rest = slot.rest,
-                                reps = slot.repMin
+                                weight = sug?.weightKg ?: 0.0,
+                                reps = sug?.reps ?: slot.repMin,
+                                hint = sug?.lastSummary.orEmpty(),
+                                reason = sug?.reason.orEmpty()
                             )
                         )
                     }
@@ -347,10 +355,18 @@ private fun SetCard(
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    "#${row.setNo} · ${row.target} · RIR ${row.rir}",
+                    "#${row.setNo} · ${row.target} · RIR ${row.rir}" +
+                        if (row.hint.isNotEmpty() && row.hint != "首次") " · 上次 ${row.hint}" else "",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                if (row.reason.isNotEmpty() && !row.done) {
+                    Text(
+                        row.reason,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
             Checkbox(checked = row.done, onCheckedChange = { onToggle() })
         }

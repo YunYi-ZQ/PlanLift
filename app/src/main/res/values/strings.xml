@@ -56,4 +56,12 @@
     <string name="settings_next_body">自动加重引擎（第 2 周）、每周组数看板、e1RM 曲线、WebDAV 同步（第 4 周）。</string>
     <string name="settings_disclaimer_title">健康提示</string>
     <string name="settings_disclaimer_body">本 App 仅提供训练安排参考，不构成医疗建议。有伤病、孕期或心血管问题请先咨询医生。动作出现疼痛立即停止。</string>
+    <string name="nav_progress">进度</string>
+    <string name="progress_subtitle">最近 7 天的训练量与力量变化</string>
+    <string name="weekly_sets_title">本周各肌群组数</string>
+    <string name="weekly_sets_hint">推荐区间每肌群 10–20 组／周；低于 10 偏少，高于 20 多为疲劳</string>
+    <string name="weekly_sets_empty">本周还没有正式组，练一组就会出现在这里</string>
+    <string name="e1rm_title">力量进度</string>
+    <string name="e1rm_hint">按 Epley 公式估算的 1RM，取历史最好一组</string>
+    <string name="e1rm_empty">还没有数据，完成一次训练后生成</string>
 </resources>

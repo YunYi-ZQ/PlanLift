@@ -60,6 +60,9 @@ interface SessionDao {
     @Query("SELECT COUNT(*) FROM training_session WHERE deleted = 0")
     suspend fun count(): Int
 
+    @Query("SELECT COUNT(*) FROM training_session WHERE enrollmentId = :enrollmentId AND deleted = 0")
+    suspend fun countByEnrollment(enrollmentId: String): Int
+
     @Query("SELECT MAX(date) FROM training_session WHERE deleted = 0")
     suspend fun lastTrainedAt(): Long?
 }
@@ -74,6 +77,20 @@ interface SetLogDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsertAll(logs: List<SetLogEntity>)
+
+    /** 该动作最近一次出现在哪次训练里 */
+    @Query("SELECT sessionId FROM set_log WHERE exerciseId = :exId AND done = 1 AND deleted = 0 ORDER BY updatedAt DESC LIMIT 1")
+    suspend fun lastSessionIdFor(exId: String): String?
+
+    /** 某时间点之后的全部正式组（用于每周组数统计） */
+    @Query(
+        "SELECT s.* FROM set_log s INNER JOIN training_session t ON s.sessionId = t.id " +
+            "WHERE t.date >= :since AND s.done = 1 AND s.deleted = 0 AND t.deleted = 0"
+    )
+    suspend fun setsSince(since: Long): List<SetLogEntity>
+
+    @Query("SELECT * FROM set_log WHERE done = 1 AND deleted = 0")
+    suspend fun allDoneSets(): List<SetLogEntity>
 }
 
 @Dao

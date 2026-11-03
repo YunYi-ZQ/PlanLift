@@ -19,6 +19,7 @@ import app.planlift.fit.data.content.isChinese
 import app.planlift.fit.ui.history.HistoryScreen
 import app.planlift.fit.ui.plans.PlanDetailScreen
 import app.planlift.fit.ui.plans.PlanListScreen
+import app.planlift.fit.ui.progress.ProgressScreen
 import app.planlift.fit.ui.settings.SettingsScreen
 import app.planlift.fit.ui.today.TodayScreen
 import app.planlift.fit.ui.workout.WorkoutScreen
@@ -27,6 +28,7 @@ object Routes {
     const val TODAY = "today"
     const val PLANS = "plans"
     const val HISTORY = "history"
+    const val PROGRESS = "progress"
     const val SETTINGS = "settings"
     const val PLAN_DETAIL = "plan/{planId}"
     const val WORKOUT = "workout/{dayIndex}"
@@ -41,6 +43,7 @@ private val TABS = listOf(
     Tab(Routes.TODAY, R.string.nav_today, "◎"),
     Tab(Routes.PLANS, R.string.nav_plans, "≡"),
     Tab(Routes.HISTORY, R.string.nav_history, "▤"),
+    Tab(Routes.PROGRESS, R.string.nav_progress, "◔"),
     Tab(Routes.SETTINGS, R.string.nav_settings, "☰")
 )
 
@@ -117,6 +120,7 @@ fun AppNav() {
                 )
             }
             composable(Routes.HISTORY) { HistoryScreen(isZh = isZh) }
+            composable(Routes.PROGRESS) { ProgressScreen(isZh = isZh) }
             composable(Routes.SETTINGS) { SettingsScreen(isZh = isZh) }
         }
     }
