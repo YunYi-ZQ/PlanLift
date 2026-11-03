@@ -5,7 +5,7 @@
 
     <string name="nav_today">Today</string>
     <string name="nav_plans">Plans</string>
-    <string name="nav_progress">Progress</string>
+    <string name="nav_history">History</string>
     <string name="nav_settings">Me</string>
 
     <string name="today_title">Today\'s Workout</string>
@@ -13,10 +13,47 @@
     <string name="today_hint">Pick a plan. Eight weeks from now you will thank yourself.</string>
     <string name="action_start_workout">Start workout</string>
     <string name="action_browse_plans">Browse plans</string>
+    <string name="today_plan_today">Today\'s exercises</string>
+    <string name="recent_sessions">Recently completed</string>
+    <string name="action_quit_plan">Quit current plan</string>
+    <string name="quit_confirm">Your progress is kept, but you will leave the plan. Continue?</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_back">Back</string>
+    <string name="action_enroll">Start this plan</string>
 
-    <string name="w0_title">Environment check build v0.1.0</string>
-    <string name="w0_item_build">Toolchain: AGP 8.2 · Gradle 8.5 · Kotlin 2.0</string>
-    <string name="w0_item_i18n">Locales: English / 简体中文</string>
-    <string name="w0_item_device">Target device: Redmi K60 (arm64)</string>
-    <string name="w0_language_current">Language: %1$s</string>
+    <string name="week_progress">Week %1$d of %2$d</string>
+    <string name="weeks_count">%1$d-week cycle</string>
+    <string name="sets_count">%1$d sets</string>
+    <string name="sets_per_week">%1$d sets/week</string>
+    <string name="days_per_week">%1$d days/week</string>
+    <string name="minutes_range">%1$s min</string>
+    <string name="sets_volume">%1$d sets · %2$.0f kg</string>
+    <string name="plan_source_note">Parameters come from reviewed public sources — see project docs</string>
+    <string name="action_expand">Expand</string>
+    <string name="action_collapse">Collapse</string>
+
+    <string name="plans_subtitle">%1$d plans · filter by goal and days</string>
+    <string name="filter_all">All</string>
+    <string name="filter_male">For men</string>
+    <string name="filter_female">For women</string>
+    <string name="filter_days">≤ %1$d days</string>
+
+    <string name="workout_title">Working out</string>
+    <string name="label_weight">Weight</string>
+    <string name="label_reps">Reps</string>
+    <string name="rest_countdown">Rest %1$d s</string>
+    <string name="rest_hint">Go again when ready</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_finish">Finish workout (%1$d sets)</string>
+
+    <string name="history_count">%1$d workouts</string>
+    <string name="history_empty">No workouts logged yet</string>
+
+    <string name="settings_about_title">About PlanLift</string>
+    <string name="settings_about_body">v0.2.0 · Offline-first training planner. 16 built-in plans, 38 exercises, all data stays on this device.</string>
+    <string name="settings_next_title">Coming next</string>
+    <string name="settings_next_body">Auto-progression engine (week 2), weekly set dashboard, e1RM curves, WebDAV sync (week 4).</string>
+    <string name="settings_disclaimer_title">Health notice</string>
+    <string name="settings_disclaimer_body">PlanLift offers training guidance only, not medical advice. Consult a doctor if you are injured, pregnant, or have cardiovascular conditions. Stop immediately if an exercise hurts.</string>
 </resources>

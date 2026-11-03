@@ -5,7 +5,7 @@
 
     <string name="nav_today">今日</string>
     <string name="nav_plans">计划库</string>
-    <string name="nav_progress">进度</string>
+    <string name="nav_history">历史</string>
     <string name="nav_settings">我的</string>
 
     <string name="today_title">今日训练</string>
@@ -13,10 +13,47 @@
     <string name="today_hint">从计划库选一套，8 周之后你会感谢现在的自己。</string>
     <string name="action_start_workout">开始训练</string>
     <string name="action_browse_plans">去看看计划</string>
+    <string name="today_plan_today">今日课表</string>
+    <string name="recent_sessions">最近完成</string>
+    <string name="action_quit_plan">退出当前计划</string>
+    <string name="quit_confirm">退出后当前进度会被保留，但你将回到无计划状态。确定吗？</string>
+    <string name="action_confirm">确定</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_back">返回</string>
+    <string name="action_enroll">加入这套计划</string>
 
-    <string name="w0_title">环境验证版本 v0.1.0</string>
-    <string name="w0_item_build">构建链路：AGP 8.2 · Gradle 8.5 · Kotlin 2.0</string>
-    <string name="w0_item_i18n">双语资源：简体中文 / English</string>
-    <string name="w0_item_device">目标设备：Redmi K60（arm64）</string>
-    <string name="w0_language_current">当前语言：%1$s</string>
+    <string name="week_progress">第 %1$d / %2$d 周</string>
+    <string name="weeks_count">%1$d 周周期</string>
+    <string name="sets_count">%1$d 组</string>
+    <string name="sets_per_week">每周 %1$d 组</string>
+    <string name="days_per_week">每周 %1$d 练</string>
+    <string name="minutes_range">%1$s 分钟</string>
+    <string name="sets_volume">%1$d 组 · %2$.0f kg</string>
+    <string name="plan_source_note">计划参数来自已核对的公开来源，详见项目文档</string>
+    <string name="action_expand">展开</string>
+    <string name="action_collapse">收起</string>
+
+    <string name="plans_subtitle">共 %1$d 套 · 按目标与天数筛选</string>
+    <string name="filter_all">全部</string>
+    <string name="filter_male">男性向</string>
+    <string name="filter_female">女性向</string>
+    <string name="filter_days">≤ %1$d 练</string>
+
+    <string name="workout_title">训练中</string>
+    <string name="label_weight">重量</string>
+    <string name="label_reps">次数</string>
+    <string name="rest_countdown">休息 %1$d 秒</string>
+    <string name="rest_hint">下一组准备好了就继续</string>
+    <string name="action_skip">跳过</string>
+    <string name="action_finish">完成训练（%1$d 组）</string>
+
+    <string name="history_count">共 %1$d 次训练</string>
+    <string name="history_empty">还没有训练记录</string>
+
+    <string name="settings_about_title">关于 PlanLift</string>
+    <string name="settings_about_body">v0.2.0 · 离线优先的训练计划 App。内置 16 套计划、38 个动作，数据全部保存在本机。</string>
+    <string name="settings_next_title">即将加入</string>
+    <string name="settings_next_body">自动加重引擎（第 2 周）、每周组数看板、e1RM 曲线、WebDAV 同步（第 4 周）。</string>
+    <string name="settings_disclaimer_title">健康提示</string>
+    <string name="settings_disclaimer_body">本 App 仅提供训练安排参考，不构成医疗建议。有伤病、孕期或心血管问题请先咨询医生。动作出现疼痛立即停止。</string>
 </resources>

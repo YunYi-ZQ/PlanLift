@@ -1,0 +1,3222 @@
+{
+ "version": 1,
+ "generatedAt": "2026-11-03",
+ "source": "见 docs/plan-sources.md：SmartWorkout 计划库、Muscle & Strength、Barbell Medicine、Men's Health、知乎、Reddit r/xxfitness",
+ "plans": [
+  {
+   "id": "M1",
+   "zh": "新手全身 3 练",
+   "en": "Beginner Full Body 3x",
+   "gender": "male",
+   "goal": "hypertrophy",
+   "level": "beginner",
+   "daysPerWeek": 3,
+   "equipment": "gym",
+   "split": "full_body",
+   "durationWeeks": 8,
+   "sessionMin": "40-45",
+   "weeklySets": 41,
+   "note": "一三五训练，中间至少隔一天；每周总组数偏少，靠加重而不是加组进步。",
+   "days": [
+    {
+     "zh": "全身 A",
+     "en": "Full Body A",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 2,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 3,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 B",
+     "en": "Full Body B",
+     "slots": [
+      {
+       "ex": "goblet_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "incline_db_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 C",
+     "en": "Full Body C",
+     "slots": [
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "bb_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M2",
+   "zh": "新手上下肢 4 练",
+   "en": "Beginner Upper/Lower 4x",
+   "gender": "male",
+   "goal": "hypertrophy",
+   "level": "beginner",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "upper_lower",
+   "durationWeeks": 8,
+   "sessionMin": "30-40",
+   "weeklySets": 61,
+   "note": "上下肢交替，每块肌肉每周 2 次，是新手性价比最高的 4 天方案。",
+   "days": [
+    {
+     "zh": "上肢 A",
+     "en": "Upper A",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 A",
+     "en": "Lower A",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 B",
+     "en": "Upper B",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "bb_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "face_pull",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hammer_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "overhead_ext",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 B",
+     "en": "Lower B",
+     "slots": [
+      {
+       "ex": "hack_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M3",
+   "zh": "进阶上下肢 4 练",
+   "en": "Intermediate Upper/Lower 4x",
+   "gender": "male",
+   "goal": "hypertrophy",
+   "level": "intermediate",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "upper_lower",
+   "durationWeeks": 8,
+   "sessionMin": "40-50",
+   "weeklySets": 77,
+   "note": "强度日 4-6 次、增肌日 8-12 次；第 8 周组数降到 60%。",
+   "days": [
+    {
+     "zh": "上肢 A · 强度",
+     "en": "Upper A · Strength",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 4,
+       "repMin": 4,
+       "repMax": 6,
+       "rir": 2,
+       "rest": 210,
+       "note": ""
+      },
+      {
+       "ex": "bb_row",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 A · 强度",
+     "en": "Lower A · Strength",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 4,
+       "repMin": 4,
+       "repMax": 6,
+       "rir": 2,
+       "rest": 210,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 B · 增肌",
+     "en": "Upper B · Hypertrophy",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "chest_supported_row",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_fly",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hammer_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 B · 增肌",
+     "en": "Lower B · Hypertrophy",
+     "slots": [
+      {
+       "ex": "hack_squat",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M4",
+   "zh": "进阶推拉腿 6 练",
+   "en": "Intermediate PPL 6x",
+   "gender": "male",
+   "goal": "hypertrophy",
+   "level": "intermediate",
+   "daysPerWeek": 6,
+   "equipment": "gym",
+   "split": "ppl",
+   "durationWeeks": 8,
+   "sessionMin": "30-40",
+   "weeklySets": 83,
+   "note": "连练 6 天周日休息；A/B 日用不同动作练同一肌群，大肌群 10-12 组/周。",
+   "days": [
+    {
+     "zh": "推 A",
+     "en": "Push A",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_fly",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "拉 A",
+     "en": "Pull A",
+     "slots": [
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "腿 A",
+     "en": "Legs A",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "推 B",
+     "en": "Push B",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 2,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "overhead_ext",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "拉 B",
+     "en": "Pull B",
+     "slots": [
+      {
+       "ex": "bb_row",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "face_pull",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "incline_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hammer_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "腿 B",
+     "en": "Legs B",
+     "slots": [
+      {
+       "ex": "hack_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "walking_lunge",
+       "sets": 2,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M5",
+   "zh": "进阶推拉 4 练",
+   "en": "Intermediate Push/Pull 4x",
+   "gender": "male",
+   "goal": "hypertrophy",
+   "level": "intermediate",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "push_pull",
+   "durationWeeks": 8,
+   "sessionMin": "40-55",
+   "weeklySets": 65,
+   "note": "腿部拆进推日与拉日，没有独立练腿日，适合讨厌练腿的人。",
+   "days": [
+    {
+     "zh": "推 A · 胸肩",
+     "en": "Push A · Chest/Shoulder",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 4,
+       "repMin": 5,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_fly",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "拉 A · 背二头",
+     "en": "Pull A · Back/Biceps",
+     "slots": [
+      {
+       "ex": "pullup",
+       "sets": 4,
+       "repMin": 5,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hammer_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "推 B · 胸为主",
+     "en": "Push B · Chest Focus",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "overhead_ext",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "拉 B · 背为主",
+     "en": "Pull B · Back Focus",
+     "slots": [
+      {
+       "ex": "bb_row",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "face_pull",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "incline_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M6",
+   "zh": "力量起步 3×5",
+   "en": "Strength Starter 3x5",
+   "gender": "male",
+   "goal": "strength",
+   "level": "beginner",
+   "daysPerWeek": 3,
+   "equipment": "gym",
+   "split": "strength",
+   "durationWeeks": 12,
+   "sessionMin": "45-55",
+   "weeklySets": 23,
+   "note": "A/B 交替（第一周 ABA，第二周 BAB），每次训练都加重，力竭前留 2 次余力。",
+   "days": [
+    {
+     "zh": "A 日",
+     "en": "Workout A",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "deadlift",
+       "sets": 1,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "B 日",
+     "en": "Workout B",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "ohp",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "bb_row",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "A 日（第二次）",
+     "en": "Workout A (2nd)",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      },
+      {
+       "ex": "deadlift",
+       "sets": 1,
+       "repMin": 5,
+       "repMax": 5,
+       "rir": 2,
+       "rest": 240,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M7",
+   "zh": "倒三角 4 练",
+   "en": "V-Taper 4x",
+   "gender": "male",
+   "goal": "aesthetics",
+   "level": "intermediate",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "upper_lower",
+   "durationWeeks": 8,
+   "sessionMin": "45-50",
+   "weeklySets": 66,
+   "note": "肩中束 13-16 组/周 + 背阔 12 组，胸腿维持；视觉宽度靠侧平举堆出来。",
+   "days": [
+    {
+     "zh": "上肢 A · 肩背",
+     "en": "Upper A · Shoulders/Back",
+     "slots": [
+      {
+       "ex": "bb_row",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "face_pull",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 A",
+     "en": "Lower A",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 B · 胸背",
+     "en": "Upper B · Chest/Back",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 8,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "pullup",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "incline_db_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "chest_supported_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 B",
+     "en": "Lower B",
+     "slots": [
+      {
+       "ex": "hack_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M8",
+   "zh": "手臂优先 4 练",
+   "en": "Arms Priority 4x",
+   "gender": "male",
+   "goal": "aesthetics",
+   "level": "intermediate",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "ppl_arms",
+   "durationWeeks": 8,
+   "sessionMin": "40-50",
+   "weeklySets": 57,
+   "note": "单独一天只练手臂，二头 10 组、三头 10 组/周。",
+   "days": [
+    {
+     "zh": "推",
+     "en": "Push",
+     "slots": [
+      {
+       "ex": "bb_bench",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_fly",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "拉",
+     "en": "Pull",
+     "slots": [
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "腿",
+     "en": "Legs",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "手臂日",
+     "en": "Arms Day",
+     "slots": [
+      {
+       "ex": "incline_curl",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "overhead_ext",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hammer_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F1",
+   "zh": "新手全身 3 练 · 臀腿优先",
+   "en": "Beginner Full Body 3x · Glute Focus",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "beginner",
+   "daysPerWeek": 3,
+   "equipment": "gym",
+   "split": "full_body",
+   "durationWeeks": 8,
+   "sessionMin": "35-45",
+   "weeklySets": 41,
+   "note": "臀肌约 12 组/周（通用版约 8.5），一半来自臀推；上半身只保留背与肩。",
+   "days": [
+    {
+     "zh": "全身 A · 臀推为主",
+     "en": "Full Body A · Hip Thrust",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "goblet_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 B · 分腿为主",
+     "en": "Full Body B · Split Squat",
+     "slots": [
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 C · 铰链为主",
+     "en": "Full Body C · Hinge",
+     "slots": [
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "dead_bug",
+       "sets": 2,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F2",
+   "zh": "新手器械 3 练 · 臀部优先",
+   "en": "Beginner Machines 3x · Glute First",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "beginner",
+   "daysPerWeek": 3,
+   "equipment": "machine",
+   "split": "full_body",
+   "durationWeeks": 8,
+   "sessionMin": "40",
+   "weeklySets": 44,
+   "note": "全程固定器械，不用学自由重量；先练臀再练其他，避免被疲劳拖累。",
+   "days": [
+    {
+     "zh": "全身 A",
+     "en": "Full Body A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 B",
+     "en": "Full Body B",
+     "slots": [
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hack_squat",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "chest_supported_row",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 C",
+     "en": "Full Body C",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F3",
+   "zh": "新手居家哑铃 3 练",
+   "en": "Home Dumbbell 3x",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "beginner",
+   "daysPerWeek": 3,
+   "equipment": "dumbbell",
+   "split": "full_body",
+   "durationWeeks": 8,
+   "sessionMin": "35-45",
+   "weeklySets": 38,
+   "note": "只需一对哑铃 + 弹力带；哑铃跳档太大时先加次数。",
+   "days": [
+    {
+     "zh": "居家 A",
+     "en": "Home A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 120,
+       "note": "背靠沙发"
+      },
+      {
+       "ex": "goblet_squat",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "pushup",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "plank",
+       "sets": 3,
+       "repMin": 30,
+       "repMax": 45,
+       "rir": 1,
+       "rest": 60,
+       "note": "秒"
+      }
+     ]
+    },
+    {
+     "zh": "居家 B",
+     "en": "Home B",
+     "slots": [
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": "弹力带"
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "dead_bug",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "居家 C",
+     "en": "Home C",
+     "slots": [
+      {
+       "ex": "walking_lunge",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 0,
+       "repMin": 0,
+       "repMax": 0,
+       "rir": 0,
+       "rest": 0,
+       "note": "无器械可跳过"
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 0,
+       "repMin": 0,
+       "repMax": 0,
+       "rir": 0,
+       "rest": 0,
+       "note": "用卷腹替代"
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F4",
+   "zh": "新手全身 2 练 · 臀部优先",
+   "en": "Beginner Full Body 2x · Glute First",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "beginner",
+   "daysPerWeek": 2,
+   "equipment": "gym",
+   "split": "full_body",
+   "durationWeeks": 8,
+   "sessionMin": "45",
+   "weeklySets": 31,
+   "note": "每周只练 2 天时的最低有效方案，每次都要练到接近力竭。",
+   "days": [
+    {
+     "zh": "全身 A",
+     "en": "Full Body A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "goblet_squat",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身 B",
+     "en": "Full Body B",
+     "slots": [
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F5",
+   "zh": "进阶上下肢 4 练 · 臀腿优先",
+   "en": "Intermediate Upper/Lower 4x · Glute Focus",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "intermediate",
+   "daysPerWeek": 4,
+   "equipment": "gym",
+   "split": "upper_lower",
+   "durationWeeks": 8,
+   "sessionMin": "35-50",
+   "weeklySets": 60,
+   "note": "臀肌约 16 组/周（通用版约 11.5），两个下肢日 + 两个上肢日。",
+   "days": [
+    {
+     "zh": "下肢 A · 臀推",
+     "en": "Lower A · Hip Thrust",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 A",
+     "en": "Upper A",
+     "slots": [
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 B · 铰链",
+     "en": "Lower B · Hinge",
+     "slots": [
+      {
+       "ex": "rdl",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 B",
+     "en": "Upper B",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "chest_supported_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "face_pull",
+       "sets": 2,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F6",
+   "zh": "进阶臀腿 3 练",
+   "en": "Intermediate Glute/Leg 3x",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "intermediate",
+   "daysPerWeek": 3,
+   "equipment": "gym",
+   "split": "lower_upper_lower",
+   "durationWeeks": 8,
+   "sessionMin": "45-50",
+   "weeklySets": 44,
+   "note": "下肢 / 上肢 / 下肢，两个下肢日中间隔开，臀约 14 组/周。",
+   "days": [
+    {
+     "zh": "下肢 A",
+     "en": "Lower A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "bb_squat",
+       "sets": 3,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢",
+     "en": "Upper",
+     "slots": [
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 2,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "下肢 B",
+     "en": "Lower B",
+     "slots": [
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F7",
+   "zh": "进阶 5 练 · 臀部优先",
+   "en": "Intermediate 5x · Glute Priority",
+   "gender": "female",
+   "goal": "glutes",
+   "level": "intermediate",
+   "daysPerWeek": 5,
+   "equipment": "gym",
+   "split": "glute_priority",
+   "durationWeeks": 8,
+   "sessionMin": "30-40",
+   "weeklySets": 64,
+   "note": "每日 30-40 分钟短课，臀 3 次/周、约 16 组；上肢只做背与肩。",
+   "days": [
+    {
+     "zh": "臀腿 A",
+     "en": "Glute/Leg A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 150,
+       "note": ""
+      },
+      {
+       "ex": "leg_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 A · 背",
+     "en": "Upper A · Back",
+     "slots": [
+      {
+       "ex": "lat_pulldown",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "reverse_fly",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "db_curl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "臀腿 B",
+     "en": "Glute/Leg B",
+     "slots": [
+      {
+       "ex": "bb_squat",
+       "sets": 4,
+       "repMin": 6,
+       "repMax": 10,
+       "rir": 2,
+       "rest": 180,
+       "note": ""
+      },
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "leg_ext",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "上肢 B · 胸肩",
+     "en": "Upper B · Chest/Shoulder",
+     "slots": [
+      {
+       "ex": "incline_db_press",
+       "sets": 4,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "lateral_raise",
+       "sets": 4,
+       "repMin": 12,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "triceps_pushdown",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "臀 · 充血",
+     "en": "Glute · Pump",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "walking_lunge",
+       "sets": 2,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_crunch",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "F8",
+   "zh": "减脂塑形 5 练",
+   "en": "Fat Loss & Tone 5x",
+   "gender": "female",
+   "goal": "fat_loss",
+   "level": "beginner",
+   "daysPerWeek": 5,
+   "equipment": "mixed",
+   "split": "hybrid",
+   "durationWeeks": 8,
+   "sessionMin": "40-60",
+   "weeklySets": 47,
+   "note": "4 天力量 + 1 天有氧为主 + 2 天休息；减脂靠热量缺口，不靠多练有氧。",
+   "days": [
+    {
+     "zh": "全身力量 A",
+     "en": "Full Body Strength A",
+     "slots": [
+      {
+       "ex": "hip_thrust",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "goblet_squat",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "machine_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "lat_pulldown",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "plank",
+       "sets": 3,
+       "repMin": 30,
+       "repMax": 45,
+       "rir": 1,
+       "rest": 60,
+       "note": "秒"
+      }
+     ]
+    },
+    {
+     "zh": "有氧日",
+     "en": "Cardio Day",
+     "slots": [
+      {
+       "ex": "incline_walk",
+       "sets": 1,
+       "repMin": 25,
+       "repMax": 40,
+       "rir": 0,
+       "rest": 0,
+       "note": "分钟，坡度 8-12%"
+      }
+     ]
+    },
+    {
+     "zh": "全身力量 B",
+     "en": "Full Body Strength B",
+     "slots": [
+      {
+       "ex": "rdl",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "bulgarian",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "db_shoulder_press",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "dead_bug",
+       "sets": 3,
+       "repMin": 10,
+       "repMax": 12,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "全身力量 C",
+     "en": "Full Body Strength C",
+     "slots": [
+      {
+       "ex": "hip_abduction",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      },
+      {
+       "ex": "leg_press",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 120,
+       "note": ""
+      },
+      {
+       "ex": "pushup",
+       "sets": 3,
+       "repMin": 8,
+       "repMax": 12,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "cable_row",
+       "sets": 3,
+       "repMin": 12,
+       "repMax": 15,
+       "rir": 2,
+       "rest": 90,
+       "note": ""
+      },
+      {
+       "ex": "calf_raise",
+       "sets": 3,
+       "repMin": 15,
+       "repMax": 20,
+       "rir": 1,
+       "rest": 60,
+       "note": ""
+      }
+     ]
+    },
+    {
+     "zh": "有氧 + 核心",
+     "en": "Cardio + Core",
+     "slots": [
+      {
+       "ex": "incline_walk",
+       "sets": 1,
+       "repMin": 20,
+       "repMax": 30,
+       "rir": 0,
+       "rest": 0,
+       "note": "分钟"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

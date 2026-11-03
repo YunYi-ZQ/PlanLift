@@ -1,0 +1,344 @@
+[
+ {
+  "id": "bb_squat",
+  "zh": "杠铃深蹲",
+  "en": "Barbell Back Squat",
+  "primary": "quads",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "脚掌三点着地，髋膝同时屈伸，蹲到大腿平行或更低"
+ },
+ {
+  "id": "goblet_squat",
+  "zh": "高脚杯深蹲",
+  "en": "Goblet Squat",
+  "primary": "quads",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "哑铃贴胸，肘在膝内侧，躯干直立"
+ },
+ {
+  "id": "hack_squat",
+  "zh": "哈克深蹲",
+  "en": "Hack Squat",
+  "primary": "quads",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "全脚掌踩实，下放到膝角约 90 度"
+ },
+ {
+  "id": "leg_press",
+  "zh": "腿举",
+  "en": "Leg Press",
+  "primary": "quads",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "腰背贴垫，膝盖不锁死"
+ },
+ {
+  "id": "bulgarian",
+  "zh": "保加利亚分腿蹲",
+  "en": "Bulgarian Split Squat",
+  "primary": "quads",
+  "equipment": "dumbbell",
+  "unilateral": true,
+  "cue": "后脚抬高，重心在前脚中部"
+ },
+ {
+  "id": "walking_lunge",
+  "zh": "行走弓步",
+  "en": "Walking Lunge",
+  "primary": "quads",
+  "equipment": "dumbbell",
+  "unilateral": true,
+  "cue": "步幅以膝盖不超脚尖过多为准"
+ },
+ {
+  "id": "leg_ext",
+  "zh": "坐姿腿屈伸",
+  "en": "Leg Extension",
+  "primary": "quads",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "顶端停 1 秒，控制下放"
+ },
+ {
+  "id": "hip_thrust",
+  "zh": "杠铃臀推",
+  "en": "Barbell Hip Thrust",
+  "primary": "glutes",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "下巴微收，顶端夹臀 1 秒，肋骨不外翻"
+ },
+ {
+  "id": "rdl",
+  "zh": "罗马尼亚硬拉",
+  "en": "Romanian Deadlift",
+  "primary": "hams",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "杠铃贴腿，臀后推，背部变圆之前停"
+ },
+ {
+  "id": "deadlift",
+  "zh": "传统硬拉",
+  "en": "Conventional Deadlift",
+  "primary": "hams",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "起杠前绷紧背阔，杠铃贴腿走直线"
+ },
+ {
+  "id": "hip_abduction",
+  "zh": "髋外展",
+  "en": "Hip Abduction",
+  "primary": "glutes",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "骨盆稳定，靠臀中肌发力"
+ },
+ {
+  "id": "leg_curl",
+  "zh": "坐姿腿弯举",
+  "en": "Seated Leg Curl",
+  "primary": "hams",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "下放 3 秒，顶端不抢"
+ },
+ {
+  "id": "calf_raise",
+  "zh": "提踵",
+  "en": "Standing Calf Raise",
+  "primary": "calves",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "全幅度，底部有拉伸感"
+ },
+ {
+  "id": "bb_bench",
+  "zh": "杠铃卧推",
+  "en": "Barbell Bench Press",
+  "primary": "chest",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "肩胛后收下沉，杠铃触胸中下部"
+ },
+ {
+  "id": "incline_db_press",
+  "zh": "上斜哑铃卧推",
+  "en": "Incline Dumbbell Press",
+  "primary": "chest",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "凳面 30 度，肘约 45 度"
+ },
+ {
+  "id": "machine_press",
+  "zh": "器械推胸",
+  "en": "Machine Chest Press",
+  "primary": "chest",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "座椅高度让把手对齐胸中"
+ },
+ {
+  "id": "cable_fly",
+  "zh": "绳索飞鸟",
+  "en": "Cable Fly",
+  "primary": "chest",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "肘微屈固定，靠抱合发力"
+ },
+ {
+  "id": "pushup",
+  "zh": "俯卧撑",
+  "en": "Push-up",
+  "primary": "chest",
+  "equipment": "bodyweight",
+  "unilateral": false,
+  "cue": "身体成一条直线，胸贴地"
+ },
+ {
+  "id": "db_shoulder_press",
+  "zh": "坐姿哑铃推举",
+  "en": "Seated Dumbbell Shoulder Press",
+  "primary": "shoulders",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "手腕在肘正上方，不耸肩"
+ },
+ {
+  "id": "ohp",
+  "zh": "站姿杠铃推举",
+  "en": "Overhead Press",
+  "primary": "shoulders",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "核心收紧，杠铃走直线过下巴"
+ },
+ {
+  "id": "lateral_raise",
+  "zh": "哑铃侧平举",
+  "en": "Dumbbell Lateral Raise",
+  "primary": "shoulders",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "小指略高，抬到与肩平即可"
+ },
+ {
+  "id": "reverse_fly",
+  "zh": "绳索反向飞鸟",
+  "en": "Cable Reverse Fly",
+  "primary": "shoulders",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "肘微屈，肩后束发力"
+ },
+ {
+  "id": "face_pull",
+  "zh": "面拉",
+  "en": "Face Pull",
+  "primary": "shoulders",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "拉向眉眼高度，外旋收尾"
+ },
+ {
+  "id": "pullup",
+  "zh": "引体向上",
+  "en": "Pull-up",
+  "primary": "back",
+  "equipment": "bodyweight",
+  "unilateral": false,
+  "cue": "肩胛先下沉再屈肘"
+ },
+ {
+  "id": "lat_pulldown",
+  "zh": "高位下拉",
+  "en": "Lat Pulldown",
+  "primary": "back",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "肘向下向后，不后仰借力"
+ },
+ {
+  "id": "cable_row",
+  "zh": "坐姿划船",
+  "en": "Seated Cable Row",
+  "primary": "back",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "躯干稳定，肘贴身体"
+ },
+ {
+  "id": "bb_row",
+  "zh": "杠铃划船",
+  "en": "Barbell Row",
+  "primary": "back",
+  "equipment": "barbell",
+  "unilateral": false,
+  "cue": "躯干前倾 45 度，拉到腹部"
+ },
+ {
+  "id": "chest_supported_row",
+  "zh": "俯卧划船",
+  "en": "Chest-Supported Row",
+  "primary": "back",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "胸贴垫，避免借力"
+ },
+ {
+  "id": "db_curl",
+  "zh": "哑铃弯举",
+  "en": "Dumbbell Curl",
+  "primary": "biceps",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "肘固定在体侧，控制下放"
+ },
+ {
+  "id": "incline_curl",
+  "zh": "斜板弯举",
+  "en": "Incline Dumbbell Curl",
+  "primary": "biceps",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "斜板让长头充分拉伸"
+ },
+ {
+  "id": "hammer_curl",
+  "zh": "锤式弯举",
+  "en": "Hammer Curl",
+  "primary": "biceps",
+  "equipment": "dumbbell",
+  "unilateral": false,
+  "cue": "掌心相对，兼顾肱桡肌"
+ },
+ {
+  "id": "triceps_pushdown",
+  "zh": "三头下压",
+  "en": "Triceps Pushdown",
+  "primary": "triceps",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "肘夹紧，只有前臂动"
+ },
+ {
+  "id": "overhead_ext",
+  "zh": "过头三头伸展",
+  "en": "Overhead Triceps Extension",
+  "primary": "triceps",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "肘朝前，充分拉伸长头"
+ },
+ {
+  "id": "cable_crunch",
+  "zh": "跪姿绳索卷腹",
+  "en": "Kneeling Cable Crunch",
+  "primary": "core",
+  "equipment": "cable",
+  "unilateral": false,
+  "cue": "靠腹肌屈曲，不是髋屈"
+ },
+ {
+  "id": "plank",
+  "zh": "平板支撑",
+  "en": "Plank",
+  "primary": "core",
+  "equipment": "bodyweight",
+  "unilateral": false,
+  "cue": "臀不塌不翘，呼吸不断"
+ },
+ {
+  "id": "hanging_leg_raise",
+  "zh": "悬垂举腿",
+  "en": "Hanging Leg Raise",
+  "primary": "core",
+  "equipment": "bodyweight",
+  "unilateral": false,
+  "cue": "骨盆后倾再抬腿"
+ },
+ {
+  "id": "dead_bug",
+  "zh": "死虫",
+  "en": "Dead Bug",
+  "primary": "core",
+  "equipment": "bodyweight",
+  "unilateral": false,
+  "cue": "腰贴地，对侧手脚伸展"
+ },
+ {
+  "id": "incline_walk",
+  "zh": "坡度快走",
+  "en": "Incline Treadmill Walk",
+  "primary": "cardio",
+  "equipment": "machine",
+  "unilateral": false,
+  "cue": "坡度 8-12%，能说话但不轻松"
+ }
+]
