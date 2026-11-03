@@ -147,10 +147,11 @@ fun PlanLiftTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
+            // 全面屏：系统栏保持透明，只控制图标明暗；底色由内容自己画
             val window = (view.context as Activity).window
-            window.statusBarColor = colors.background.toArgb()
-            window.navigationBarColor = colors.background.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
+            val controller = WindowCompat.getInsetsController(window, view)
+            controller.isAppearanceLightStatusBars = !darkTheme
+            controller.isAppearanceLightNavigationBars = !darkTheme
         }
     }
 

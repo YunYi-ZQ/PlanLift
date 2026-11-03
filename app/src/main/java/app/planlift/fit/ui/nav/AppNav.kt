@@ -117,11 +117,13 @@ fun AppNav() {
     }
 
     CompositionLocalProvider(LocalContentBottomPadding provides bottomPad) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .hazeSource(hazeState)
-        ) {
+        Box(Modifier.fillMaxSize()) {
+            // 模糊源：只包含内容层，不含底栏本身
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .hazeSource(hazeState)
+            ) {
             Scaffold(
                 bottomBar = {
                     // 固定模式仍占位；悬浮模式改为覆盖层，内容可以从底下穿过
@@ -222,21 +224,27 @@ fun AppNav() {
                     composable(Routes.SETTINGS_ABOUT) { AboutScreen(onBack = { navController.popBackStack() }) }
                 }
             }
+            }
 
-            // 悬浮底栏：真正盖在内容之上
+            // 悬浮底栏：底部同色底座 + 胶囊，避免下方出现浅色带
             if (floating && showBar) {
-                val navInset = WindowInsets.navigationBars
-                    .asPaddingValues()
-                    .calculateBottomPadding()
+                val pillColor = MaterialTheme.colorScheme.surfaceContainerHigh
                 Box(
                     Modifier
                         .align(Alignment.BottomCenter)
-                        .padding(start = 24.dp, end = 24.dp, bottom = navInset + 10.dp)
+                        .fillMaxWidth()
                 ) {
-                    AnimatedVisibility(
-                        visible = true,
-                        enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
-                        exit = slideOutVertically(targetOffsetY = { it }) + fadeOut()
+                    Box(
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .fillMaxWidth()
+                            .height(26.dp)
+                            .background(pillColor)
+                    )
+                    Box(
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(start = 8.dp, end = 8.dp, bottom = 18.dp)
                     ) {
                         AppBottomBar(
                             currentRoute = current?.route,
@@ -262,18 +270,16 @@ private fun AppBottomBar(
 ) {
     val surface = MaterialTheme.colorScheme.surface
     val container = when {
-        glass && floating -> surface.copy(alpha = 0.62f)
-        glass -> surface.copy(alpha = 0.86f)
+        glass && floating -> MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.88f)
+        glass -> MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.92f)
         floating -> MaterialTheme.colorScheme.surfaceContainerHigh
         else -> MaterialTheme.colorScheme.surfaceContainer
     }
 
     Surface(
-        shape = if (floating) RoundedCornerShape(30.dp) else RoundedCornerShape(0.dp),
+        shape = if (floating) RoundedCornerShape(26.dp) else RoundedCornerShape(0.dp),
         color = if (glass && hazeState != null) Color.Transparent else container,
-        border = if (glass) {
-            BorderStroke(1.dp, MaterialTheme.colorScheme.onSurface.copy(alpha = 0.10f))
-        } else null,
+        border = null,
         tonalElevation = if (floating) 0.dp else 2.dp,
         shadowElevation = if (floating) 18.dp else 0.dp,
         modifier = Modifier
@@ -283,10 +289,12 @@ private fun AppBottomBar(
                     Modifier.hazeEffect(
                         state = hazeState,
                         style = HazeStyle(
-                            backgroundColor = surface,
-                            tints = listOf(HazeTint(surface.copy(alpha = 0.55f))),
-                            blurRadius = 26.dp,
-                            noiseFactor = 0.04f
+                            backgroundColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                            tints = listOf(
+                                HazeTint(MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = 0.80f))
+                            ),
+                            blurRadius = 44.dp,
+                            noiseFactor = 0f
                         )
                     )
                 } else Modifier
@@ -312,8 +320,8 @@ private fun AppBottomBar(
             NavigationBar(
                 containerColor = Color.Transparent,
                 tonalElevation = 0.dp,
-                windowInsets = if (floating) WindowInsets(0, 0, 0, 0) else NavigationBarDefaults.windowInsets,
-                modifier = Modifier.height(if (floating) 66.dp else 80.dp)
+                windowInsets = NavigationBarDefaults.windowInsets,
+                modifier = Modifier.height(if (floating) 78.dp else 80.dp)
             ) {
                 TABS.forEach { tab ->
                     val selected = currentRoute == tab.route

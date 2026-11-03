@@ -17,6 +17,7 @@ class PlanLiftApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app.planlift.fit.data.settings.ThemePrefs.init(this)
+        app.planlift.fit.data.settings.UserPrefs.init(this)
         container = AppContainer(this)
     }
 }

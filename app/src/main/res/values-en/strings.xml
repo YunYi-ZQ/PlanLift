@@ -176,4 +176,15 @@
     <string name="progress_streak">%1$d-day streak</string>
     <string name="progress_week_sets">Sets per day this week</string>
     <string name="progress_target_hint">Weekly goal: %1$d sessions</string>
+    <string name="height_title">Height</string>
+    <string name="height_label">Height (cm)</string>
+    <string name="height_set">Set height</string>
+    <string name="height_edit">Height</string>
+    <string name="height_value">Height %1$d cm</string>
+    <string name="bmi_label">BMI</string>
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_normal">Normal</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obese">Obese</string>
+    <string name="bmi_need_height">Add your height to see BMI</string>
 </resources>

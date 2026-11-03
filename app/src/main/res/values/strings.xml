@@ -176,4 +176,15 @@
     <string name="progress_streak">连续打卡 %1$d 天</string>
     <string name="progress_week_sets">本周每天组数</string>
     <string name="progress_target_hint">本周目标：完成 %1$d 次训练</string>
+    <string name="height_title">身高</string>
+    <string name="height_label">身高（cm）</string>
+    <string name="height_set">设置身高</string>
+    <string name="height_edit">身高</string>
+    <string name="height_value">身高 %1$d cm</string>
+    <string name="bmi_label">BMI</string>
+    <string name="bmi_underweight">偏瘦</string>
+    <string name="bmi_normal">正常</string>
+    <string name="bmi_overweight">偏胖</string>
+    <string name="bmi_obese">肥胖</string>
+    <string name="bmi_need_height">填写身高后可计算 BMI</string>
 </resources>
