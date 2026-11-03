@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
+import app.planlift.fit.ui.common.LocalContentBottomPadding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -108,7 +109,7 @@ fun ProgressScreen(isZh: Boolean) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp + LocalContentBottomPadding.current),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {

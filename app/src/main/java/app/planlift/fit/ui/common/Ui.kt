@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +27,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.platform.LocalContext
 import app.planlift.fit.AppContainer
 import app.planlift.fit.PlanLiftApp
+
+/** 悬浮底栏盖住内容时，列表底部需要让出的空间 */
+val LocalContentBottomPadding = androidx.compose.runtime.compositionLocalOf<Dp> { 0.dp }
 
 @Composable
 inline fun <reified T : ViewModel> rememberVm(

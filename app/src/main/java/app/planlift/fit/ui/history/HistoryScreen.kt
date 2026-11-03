@@ -16,6 +16,7 @@ import app.planlift.fit.AppContainer
 import app.planlift.fit.R
 import app.planlift.fit.data.local.SessionEntity
 import app.planlift.fit.ui.common.SectionCard
+import app.planlift.fit.ui.common.LocalContentBottomPadding
 import app.planlift.fit.ui.common.rememberVm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -68,7 +69,7 @@ fun HistoryScreen(isZh: Boolean) {
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding),
-                contentPadding = PaddingValues(16.dp),
+                contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp + LocalContentBottomPadding.current),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(sessions) { s: SessionEntity ->
