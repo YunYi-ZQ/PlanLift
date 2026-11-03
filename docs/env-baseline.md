@@ -30,7 +30,20 @@
 | minSdk / targetSdk | 26 / 34 | — | ✅ |
 | 打包语言 | `--_--`（默认中文）+ `en` | zh + en | ✅ |
 | native-code | arm64-v8a | arm64 | ✅ |
-| 真机安装 | **未执行（adb 无设备）** | 装到 K60 | ⏳ |
+| 真机安装 | **成功**（K60 / mondrian） | 装到 K60 | ✅ |
+| 冷启动（`am start -W` TotalTime） | **788 ms** | < 2 s | ✅ |
+| 中文界面 | 文字全部正确渲染（uiautomator 已校验） | 正确 | ✅ |
+| 英文界面 | `cmd locale set-app-locales … --locales en` 后全英文，无中文残留 | 正确 | ✅ |
+
+### 设备信息
+
+| 项 | 值 |
+|---|---|
+| 型号 | Redmi K60（23013RK75C / mondrian） |
+| adb 序列号 | `fa1f993a` |
+| 安装方式 | **root 通道**：`adb shell su -c "pm install -r -d /data/local/tmp/planlift.apk"` |
+| 常规安装失败原因 | `INSTALL_FAILED_USER_RESTRICTED: Install canceled by user`（MIUI/HyperOS 拦截 adb 安装） |
+| 中文/英文切换命令 | `adb shell cmd locale set-app-locales app.planlift.fit.debug --locales en`（Android 13+ 免 root） |
 
 ## 三、W0 踩到的三个坑（已解决，后续必看）
 
@@ -57,8 +70,10 @@ export JAVA_HOME="D:/Java/jdk-17.0.20.1+1"
 
 产物：`app/build/outputs/apk/debug/app-debug.apk`
 
-## 五、待办（W0 收尾）
+## 五、W0 收尾
 
-- [ ] 手机连 USB 或开无线调试 → `adb install -r` → 确认打开不闪退
-- [ ] 切英文系统语言（或 `adb shell cmd locale set-app-locales app.planlift.fit.debug --locales en`）→ 验证全英文
-- [ ] 记录冷启动耗时
+- [x] 真机安装（root 通道）→ 打开不闪退
+- [x] 英文 locale 切换验证
+- [x] 冷启动 788 ms
+
+**W0 结论：5/5 全部通过，可进入 W1。**
