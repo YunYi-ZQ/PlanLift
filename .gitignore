@@ -9,3 +9,9 @@ captures/
 .cxx/
 *.jks
 *.keystore
+
+# 构建与调试产物
+*.log
+*.xml.bak
+u.xml
+u2.xml
