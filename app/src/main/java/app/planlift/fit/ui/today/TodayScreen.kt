@@ -1,6 +1,9 @@
 package app.planlift.fit.ui.today
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.ui.draw.clip
+import app.planlift.fit.data.content.isChinese
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,7 +40,8 @@ data class TodayState(
     val day: DayDto? = null,
     val dayIndex: Int = 0,
     val recent: List<SessionEntity> = emptyList(),
-    val ex: Map<String, ExerciseDto> = emptyMap()
+    val ex: Map<String, ExerciseDto> = emptyMap(),
+    val weeklyDone: Int = 0
 )
 
 class TodayViewModel(container: AppContainer) : ViewModel() {
@@ -45,9 +49,14 @@ class TodayViewModel(container: AppContainer) : ViewModel() {
     private val content = container.content
     private val exFlow = kotlinx.coroutines.flow.MutableStateFlow<Map<String, ExerciseDto>>(emptyMap())
 
+    private val weeklyFlow = kotlinx.coroutines.flow.MutableStateFlow(0)
+
     init {
         viewModelScope.launch { exFlow.value = content.exercises() }
+        viewModelScope.launch { weeklyFlow.value = repo.weeklyDoneCount() }
     }
+
+    fun refreshWeek() = viewModelScope.launch { weeklyFlow.value = repo.weeklyDoneCount() }
 
     private val core = combine(
         repo.observeActiveEnrollment(),
@@ -69,8 +78,8 @@ class TodayViewModel(container: AppContainer) : ViewModel() {
         }
     }
 
-    val state: StateFlow<TodayState> = combine(core, exFlow) { s, ex ->
-        s.copy(ex = ex)
+    val state: StateFlow<TodayState> = combine(core, exFlow, weeklyFlow) { s, ex, done ->
+        s.copy(ex = ex, weeklyDone = done)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), TodayState())
 
     fun quit() = viewModelScope.launch { repo.quitPlan() }
@@ -181,6 +190,13 @@ fun TodayScreen(
                 }
 
                 item {
+                    WeekStrip(
+                        plan = plan,
+                        weeklyDone = state.weeklyDone
+                    )
+                }
+
+                item {
                     SectionCard {
                         Text(
                             stringResource(R.string.today_plan_today),
@@ -277,4 +293,88 @@ fun TodayScreen(
 private fun levelText(level: String, isZh: Boolean): String = when (level) {
     "beginner" -> if (isZh) "新手" else "Beginner"
     else -> if (isZh) "进阶" else "Intermediate"
+}
+
+private val DAY_LABELS_ZH = listOf("一", "二", "三", "四", "五", "六", "日")
+private val DAY_LABELS_EN = listOf("M", "T", "W", "T", "F", "S", "S")
+
+/** 按每周天数给出默认训练日（周一为 0） */
+private fun trainingDayIndexes(daysPerWeek: Int): List<Int> = when (daysPerWeek) {
+    1 -> listOf(2)
+    2 -> listOf(0, 3)
+    3 -> listOf(0, 2, 4)
+    4 -> listOf(0, 1, 3, 4)
+    5 -> listOf(0, 1, 2, 3, 4)
+    6 -> listOf(0, 1, 2, 3, 4, 5)
+    else -> listOf(0, 3, 4)
+}
+
+@Composable
+private fun WeekStrip(plan: PlanDto, weeklyDone: Int) {
+    val today = java.time.LocalDate.now().dayOfWeek.value - 1
+    val training = trainingDayIndexes(plan.daysPerWeek)
+    val labels = if (isChinese(java.util.Locale.getDefault().language)) DAY_LABELS_ZH else DAY_LABELS_EN
+
+    SectionCard {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                stringResource(R.string.week_view_title),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold
+            )
+            Text(
+                stringResource(R.string.week_view_count, weeklyDone, plan.daysPerWeek),
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Spacer(Modifier.height(12.dp))
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            labels.forEachIndexed { index, label ->
+                val isTraining = index in training
+                val isToday = index == today
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.width(38.dp)
+                ) {
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .size(34.dp)
+                            .clip(RoundedCornerShape(50))
+                            .background(
+                                when {
+                                    isToday -> MaterialTheme.colorScheme.primary
+                                    isTraining -> MaterialTheme.colorScheme.primaryContainer
+                                    else -> MaterialTheme.colorScheme.surfaceContainerHighest
+                                }
+                            )
+                    ) {
+                        Text(
+                            text = label,
+                            style = MaterialTheme.typography.labelMedium,
+                            color = when {
+                                isToday -> MaterialTheme.colorScheme.onPrimary
+                                isTraining -> MaterialTheme.colorScheme.onPrimaryContainer
+                                else -> MaterialTheme.colorScheme.onSurfaceVariant
+                            }
+                        )
+                    }
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        text = if (isTraining) "·" else " ",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
+    }
 }

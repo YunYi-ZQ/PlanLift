@@ -10,6 +10,8 @@ import app.planlift.fit.data.local.SessionDao
 import app.planlift.fit.data.local.SessionEntity
 import app.planlift.fit.data.local.SetLogDao
 import app.planlift.fit.data.local.SetLogEntity
+import app.planlift.fit.data.local.CustomPlanDao
+import app.planlift.fit.data.local.CustomPlanEntity
 import app.planlift.fit.data.local.EnrollmentDao
 import app.planlift.fit.data.sync.Snapshot
 import app.planlift.fit.domain.ProgressionEngine
@@ -33,10 +35,22 @@ class WorkoutRepository(
     private val setLogDao: SetLogDao,
     private val metricDao: MetricDao,
     private val profileDao: ProfileDao,
+    private val customPlanDao: CustomPlanDao,
     private val content: ContentRepository,
     private val deviceId: String
 ) {
     fun observeActiveEnrollment(): Flow<EnrollmentEntity?> = enrollmentDao.observeActive()
+
+    /** 本周（周一 00:00 起）已完成次数 */
+    suspend fun weeklyDoneCount(): Int {
+        val cal = java.util.Calendar.getInstance()
+        cal.set(java.util.Calendar.DAY_OF_WEEK, java.util.Calendar.MONDAY)
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        cal.set(java.util.Calendar.MINUTE, 0)
+        cal.set(java.util.Calendar.SECOND, 0)
+        cal.set(java.util.Calendar.MILLISECOND, 0)
+        return sessionDao.countSince(cal.timeInMillis)
+    }
     fun observeHistory(): Flow<List<SessionEntity>> = sessionDao.observeAll()
     fun observeRecentSessions(limit: Int): Flow<List<SessionEntity>> = sessionDao.observeRecent(limit)
 
@@ -220,6 +234,26 @@ class WorkoutRepository(
 
     private fun fmt(v: Double): String =
         if (v % 1.0 == 0.0) v.toInt().toString() else v.toString()
+
+    // ---------------- 自定义计划 ----------------
+
+    suspend fun saveCustomPlan(plan: PlanDto) {
+        val now = System.currentTimeMillis()
+        val existing = customPlanDao.get(plan.id)
+        customPlanDao.upsert(
+            CustomPlanEntity(
+                id = plan.id,
+                json = content.toJson(plan),
+                updatedAt = now,
+                rev = (existing?.rev ?: 0L) + 1,
+                deviceId = deviceId
+            )
+        )
+    }
+
+    suspend fun deleteCustomPlan(id: String) {
+        customPlanDao.softDelete(id, System.currentTimeMillis())
+    }
 
     // ---------------- 同步 ----------------
 

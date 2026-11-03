@@ -2,6 +2,8 @@ package app.planlift.fit
 
 import android.app.Application
 import app.planlift.fit.data.content.ContentRepository
+import app.planlift.fit.data.content.PlanDto
+import app.planlift.fit.data.local.CustomPlanDao
 import app.planlift.fit.data.local.PlanLiftDatabase
 import app.planlift.fit.data.repo.WorkoutRepository
 import app.planlift.fit.data.sync.SyncManager
@@ -14,13 +16,15 @@ class PlanLiftApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        app.planlift.fit.data.settings.ThemePrefs.init(this)
         container = AppContainer(this)
     }
 }
 
 class AppContainer(app: Application) {
     private val db = PlanLiftDatabase.get(app)
-    val content = ContentRepository(app)
+    private val customDao = db.customPlanDao()
+    val content = ContentRepository(app) { customPlansOf(customDao, app) }
     val deviceId: String = DeviceId.get(app)
     val repo = WorkoutRepository(
         enrollmentDao = db.enrollmentDao(),
@@ -28,11 +32,19 @@ class AppContainer(app: Application) {
         setLogDao = db.setLogDao(),
         metricDao = db.metricDao(),
         profileDao = db.profileDao(),
+        customPlanDao = customDao,
         content = content,
         deviceId = deviceId
     )
     val sync = SyncManager(app, repo)
 }
+
+private val contentJson = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
+
+private suspend fun customPlansOf(dao: CustomPlanDao, application: Application): List<PlanDto> =
+    dao.getAll().mapNotNull { row ->
+        runCatching { contentJson.decodeFromString(PlanDto.serializer(), row.json) }.getOrNull()
+    }
 
 /** 设备标识：用于同步冲突判定，卸载重装会变（可接受）。 */
 object DeviceId {

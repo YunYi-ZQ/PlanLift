@@ -18,9 +18,12 @@ import app.planlift.fit.R
 import app.planlift.fit.data.content.isChinese
 import app.planlift.fit.ui.history.HistoryScreen
 import app.planlift.fit.ui.plans.PlanDetailScreen
+import app.planlift.fit.ui.plans.PlanEditorScreen
 import app.planlift.fit.ui.plans.PlanListScreen
 import app.planlift.fit.ui.progress.ProgressScreen
+import app.planlift.fit.ui.settings.ExportScreen
 import app.planlift.fit.ui.settings.SettingsScreen
+import app.planlift.fit.ui.settings.SyncScreen
 import app.planlift.fit.ui.today.TodayScreen
 import app.planlift.fit.ui.workout.WorkoutScreen
 
@@ -30,10 +33,14 @@ object Routes {
     const val HISTORY = "history"
     const val PROGRESS = "progress"
     const val SETTINGS = "settings"
+    const val SETTINGS_SYNC = "settings/sync"
+    const val SETTINGS_EXPORT = "settings/export"
     const val PLAN_DETAIL = "plan/{planId}"
+    const val PLAN_EDIT = "plan_edit/{planId}"
     const val WORKOUT = "workout/{dayIndex}"
 
     fun planDetail(id: String) = "plan/$id"
+    fun planEdit(id: String?) = "plan_edit/${id ?: "new"}"
     fun workout(dayIndex: Int) = "workout/$dayIndex"
 }
 
@@ -94,7 +101,8 @@ fun AppNav() {
             composable(Routes.PLANS) {
                 PlanListScreen(
                     isZh = isZh,
-                    onOpenPlan = { id -> navController.navigate(Routes.planDetail(id)) }
+                    onOpenPlan = { id -> navController.navigate(Routes.planDetail(id)) },
+                    onNewPlan = { navController.navigate(Routes.planEdit(null)) }
                 )
             }
             composable(Routes.PLAN_DETAIL) { entry ->
@@ -119,9 +127,34 @@ fun AppNav() {
                     onCancel = { navController.popBackStack() }
                 )
             }
+            composable(Routes.PLAN_EDIT) { entry ->
+                val id = entry.arguments?.getString("planId")
+                PlanEditorScreen(
+                    planId = id,
+                    isZh = isZh,
+                    onBack = { navController.popBackStack() },
+                    onSaved = { planId ->
+                        navController.navigate(Routes.planDetail(planId)) {
+                            popUpTo(Routes.PLANS)
+                        }
+                    }
+                )
+            }
             composable(Routes.HISTORY) { HistoryScreen(isZh = isZh) }
             composable(Routes.PROGRESS) { ProgressScreen(isZh = isZh) }
-            composable(Routes.SETTINGS) { SettingsScreen(isZh = isZh) }
+            composable(Routes.SETTINGS) {
+                SettingsScreen(
+                    isZh = isZh,
+                    onOpenSync = { navController.navigate(Routes.SETTINGS_SYNC) },
+                    onOpenExport = { navController.navigate(Routes.SETTINGS_EXPORT) }
+                )
+            }
+            composable(Routes.SETTINGS_SYNC) {
+                SyncScreen(onBack = { navController.popBackStack() })
+            }
+            composable(Routes.SETTINGS_EXPORT) {
+                ExportScreen(onBack = { navController.popBackStack() })
+            }
         }
     }
 }

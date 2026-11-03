@@ -110,3 +110,14 @@ data class PersonalRecordEntity(
     val deviceId: String,
     val deleted: Boolean = false
 )
+
+/** 用户自建计划：整份 PlanDto 以 JSON 存下来，内容层与内置计划一起展示。 */
+@Entity(tableName = "custom_plan")
+data class CustomPlanEntity(
+    @PrimaryKey val id: String,
+    val json: String,
+    val updatedAt: Long,
+    val rev: Long,
+    val deviceId: String,
+    val deleted: Boolean = false
+)

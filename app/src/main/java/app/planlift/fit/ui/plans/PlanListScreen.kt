@@ -1,5 +1,6 @@
 package app.planlift.fit.ui.plans
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-enum class GenderFilter { ALL, MALE, FEMALE }
+enum class GenderFilter { ALL, MALE, FEMALE, CUSTOM }
 
 class PlanListViewModel(container: AppContainer) : ViewModel() {
     private val repo = container.repo
@@ -33,26 +34,35 @@ class PlanListViewModel(container: AppContainer) : ViewModel() {
     val plans: StateFlow<List<PlanDto>> = _plans.asStateFlow()
 
     val gender = MutableStateFlow(GenderFilter.ALL)
-    val maxDays = MutableStateFlow(0)
+    val exactDays = MutableStateFlow(0)
 
     init {
         viewModelScope.launch { _plans.value = repo.plans() }
     }
+
+    /** 返回列表时调用，保证新建/删除自定义计划后立刻可见 */
+    fun refresh() = viewModelScope.launch { _plans.value = repo.plans() }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlanListScreen(isZh: Boolean, onOpenPlan: (String) -> Unit) {
+fun PlanListScreen(
+    isZh: Boolean,
+    onOpenPlan: (String) -> Unit,
+    onNewPlan: () -> Unit
+) {
     val vm = rememberVm { PlanListViewModel(it) }
     val plans by vm.plans.collectAsState()
     val gender by vm.gender.collectAsState()
-    val maxDays by vm.maxDays.collectAsState()
+    val exactDays by vm.exactDays.collectAsState()
+
+    androidx.compose.runtime.LaunchedEffect(Unit) { vm.refresh() }
 
     val filtered = plans.filter { p ->
         (gender == GenderFilter.ALL ||
             (gender == GenderFilter.MALE && p.gender == "male") ||
             (gender == GenderFilter.FEMALE && p.gender == "female")) &&
-            (maxDays == 0 || p.daysPerWeek <= maxDays)
+            (exactDays == 0 || p.daysPerWeek == exactDays)
     }
 
     Scaffold(
@@ -70,6 +80,7 @@ fun PlanListScreen(isZh: Boolean, onOpenPlan: (String) -> Unit) {
         }
     ) { padding ->
         Column(Modifier.padding(padding)) {
+            // 第一组：性别
             LazyRow(
                 contentPadding = PaddingValues(horizontal = 16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -95,11 +106,32 @@ fun PlanListScreen(isZh: Boolean, onOpenPlan: (String) -> Unit) {
                         label = { Text(stringResource(R.string.filter_female)) }
                     )
                 }
+                item {
+                    FilterChip(
+                        selected = gender == GenderFilter.CUSTOM,
+                        onClick = { vm.gender.value = GenderFilter.CUSTOM },
+                        label = { Text(stringResource(R.string.filter_custom)) }
+                    )
+                }
+            }
+
+            // 第二组：每周天数（精确匹配）
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                item {
+                    FilterChip(
+                        selected = exactDays == 0,
+                        onClick = { vm.exactDays.value = 0 },
+                        label = { Text(stringResource(R.string.filter_days_any)) }
+                    )
+                }
                 items(listOf(2, 3, 4, 5, 6)) { d ->
                     FilterChip(
-                        selected = maxDays == d,
-                        onClick = { vm.maxDays.value = if (maxDays == d) 0 else d },
-                        label = { Text(stringResource(R.string.filter_days, d)) }
+                        selected = exactDays == d,
+                        onClick = { vm.exactDays.value = if (exactDays == d) 0 else d },
+                        label = { Text(stringResource(R.string.filter_days_exact, d)) }
                     )
                 }
             }
@@ -108,6 +140,14 @@ fun PlanListScreen(isZh: Boolean, onOpenPlan: (String) -> Unit) {
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
+                item {
+                    OutlinedButton(
+                        onClick = onNewPlan,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text("＋ " + stringResource(R.string.plan_new_title))
+                    }
+                }
                 items(filtered, key = { it.id }) { plan ->
                     PlanCard(plan, isZh) { onOpenPlan(plan.id) }
                 }
@@ -141,6 +181,9 @@ private fun PlanCard(plan: PlanDto, isZh: Boolean, onClick: () -> Unit) {
             }
             Spacer(Modifier.height(8.dp))
             Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                if (plan.gender == "custom") {
+                    Pill(stringResource(R.string.filter_custom), highlight = true)
+                }
                 Pill(stringResource(R.string.days_per_week, plan.daysPerWeek))
                 Pill(stringResource(R.string.sets_per_week, plan.weeklySets))
                 Pill(stringResource(R.string.minutes_range, plan.sessionMin))

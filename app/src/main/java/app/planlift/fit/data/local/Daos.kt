@@ -75,6 +75,9 @@ interface SessionDao {
     @Query("SELECT COUNT(*) FROM training_session WHERE deleted = 0")
     suspend fun count(): Int
 
+    @Query("SELECT COUNT(*) FROM training_session WHERE deleted = 0 AND date >= :since")
+    suspend fun countSince(since: Long): Int
+
     @Query("SELECT COUNT(*) FROM training_session WHERE enrollmentId = :enrollmentId AND deleted = 0")
     suspend fun countByEnrollment(enrollmentId: String): Int
 
@@ -133,4 +136,19 @@ interface MetricDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<BodyMetricEntity>)
+}
+
+@Dao
+interface CustomPlanDao {
+    @Query("SELECT * FROM custom_plan WHERE deleted = 0 ORDER BY updatedAt DESC")
+    suspend fun getAll(): List<CustomPlanEntity>
+
+    @Query("SELECT * FROM custom_plan WHERE id = :id")
+    suspend fun get(id: String): CustomPlanEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(item: CustomPlanEntity)
+
+    @Query("UPDATE custom_plan SET deleted = 1, updatedAt = :now, rev = rev + 1 WHERE id = :id")
+    suspend fun softDelete(id: String, now: Long)
 }
