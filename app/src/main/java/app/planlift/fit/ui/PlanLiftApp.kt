@@ -3,6 +3,7 @@ package app.planlift.fit.ui
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -16,9 +17,10 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import app.planlift.fit.R
 import app.planlift.fit.data.settings.ThemeMode
 import app.planlift.fit.data.settings.ThemePrefs
 import app.planlift.fit.ui.nav.AppNav
@@ -38,31 +40,36 @@ fun PlanLiftApp() {
         darkTheme = dark,
         seed = Color(s.seed),
         dynamic = s.dynamic,
-        pureBlack = s.pureBlack
+        pureBlack = s.pureBlack,
+        colorStyle = s.colorStyle,
+        fontStyle = s.font,
+        textScale = s.textScale,
+        followSystemScale = s.followSystemScale,
+        ripple = s.ripple
     ) {
         var splash by remember { mutableStateOf(true) }
         LaunchedEffect(Unit) {
-            delay(850)
+            delay(780)
             splash = false
         }
         if (splash) SplashScreen() else AppNav()
     }
 }
 
-/** 简洁版启动动画：图标缩放淡入 + 文字上浮，约 0.8 秒 */
+/** 简洁启动动画：App 图标缩放淡入 + 名称上浮 */
 @Composable
 private fun SplashScreen() {
-    val scale = remember { Animatable(0.82f) }
+    val scale = remember { Animatable(0.84f) }
     val fade = remember { Animatable(0f) }
-    val rise = remember { Animatable(14f) }
+    val rise = remember { Animatable(16f) }
 
     LaunchedEffect(Unit) {
         android.util.Log.d("PlanLift", "splash-shown")
-        scale.animateTo(1f, tween(520, easing = FastOutSlowInEasing))
+        scale.animateTo(1f, tween(500, easing = FastOutSlowInEasing))
     }
     LaunchedEffect(Unit) {
-        fade.animateTo(1f, tween(650))
-        rise.animateTo(0f, tween(700, easing = FastOutSlowInEasing))
+        fade.animateTo(1f, tween(600))
+        rise.animateTo(0f, tween(680, easing = FastOutSlowInEasing))
     }
 
     Box(
@@ -81,37 +88,27 @@ private fun SplashScreen() {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Box(
                 modifier = Modifier
-                    .size(96.dp)
+                    .size(104.dp)
                     .graphicsLayer {
                         scaleX = scale.value
                         scaleY = scale.value
                         alpha = fade.value
                     }
-                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(28.dp)),
+                    .background(MaterialTheme.colorScheme.primary, RoundedCornerShape(30.dp)),
                 contentAlignment = Alignment.Center
             ) {
-                Text(
-                    "PL",
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 34.sp
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_foreground),
+                    contentDescription = null,
+                    modifier = Modifier.size(96.dp)
                 )
             }
-            Spacer(Modifier.height(18.dp))
+            Spacer(Modifier.height(20.dp))
             Text(
                 "PlanLift",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.SemiBold,
                 color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier
-                    .alpha(fade.value)
-                    .graphicsLayer { translationY = rise.value }
-            )
-            Spacer(Modifier.height(6.dp))
-            Text(
-                "计划先行，重量跟上",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier
                     .alpha(fade.value)
                     .graphicsLayer { translationY = rise.value }

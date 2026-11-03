@@ -41,6 +41,56 @@ class WorkoutRepository(
 ) {
     fun observeActiveEnrollment(): Flow<EnrollmentEntity?> = enrollmentDao.observeActive()
 
+    /** 本周每天（周一=0）完成的组数 */
+    suspend fun weeklySetsByDay(): IntArray {
+        val cal = java.util.Calendar.getInstance()
+        cal.set(java.util.Calendar.DAY_OF_WEEK, java.util.Calendar.MONDAY)
+        cal.set(java.util.Calendar.HOUR_OF_DAY, 0)
+        cal.set(java.util.Calendar.MINUTE, 0)
+        cal.set(java.util.Calendar.SECOND, 0)
+        cal.set(java.util.Calendar.MILLISECOND, 0)
+        val since = cal.timeInMillis
+        val result = IntArray(7)
+        sessionDao.sessionsSince(since).forEach { s ->
+            val c = java.util.Calendar.getInstance().apply { timeInMillis = s.date }
+            val day = (c.get(java.util.Calendar.DAY_OF_WEEK) + 5) % 7
+            if (day in 0..6) result[day] += s.totalSets
+        }
+        return result
+    }
+
+    /** 连续打卡天数（今天或昨天为起点） */
+    suspend fun streakDays(): Int {
+        val days = sessionDao.allDates()
+            .map { ms ->
+                val c = java.util.Calendar.getInstance().apply { timeInMillis = ms }
+                c.set(java.util.Calendar.HOUR_OF_DAY, 0)
+                c.set(java.util.Calendar.MINUTE, 0)
+                c.set(java.util.Calendar.SECOND, 0)
+                c.set(java.util.Calendar.MILLISECOND, 0)
+                c.timeInMillis
+            }
+            .toSortedSet()
+            .toList()
+            .reversed()
+        if (days.isEmpty()) return 0
+        val today = java.util.Calendar.getInstance().apply {
+            set(java.util.Calendar.HOUR_OF_DAY, 0)
+            set(java.util.Calendar.MINUTE, 0)
+            set(java.util.Calendar.SECOND, 0)
+            set(java.util.Calendar.MILLISECOND, 0)
+        }.timeInMillis
+        val dayMs = 24L * 3600 * 1000
+        var streak = 0
+        var cursor = if (days[0] == today) today else if (days[0] == today - dayMs) today - dayMs else return 0
+        val set = days.toHashSet()
+        while (set.contains(cursor)) {
+            streak++
+            cursor -= dayMs
+        }
+        return streak
+    }
+
     /** 本周（周一 00:00 起）已完成次数 */
     suspend fun weeklyDoneCount(): Int {
         val cal = java.util.Calendar.getInstance()

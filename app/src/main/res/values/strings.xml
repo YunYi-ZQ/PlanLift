@@ -6,7 +6,7 @@
     <string name="nav_today">今日</string>
     <string name="nav_plans">计划库</string>
     <string name="nav_history">历史</string>
-    <string name="nav_settings">我的</string>
+    <string name="nav_settings">设置</string>
 
     <string name="today_title">今日训练</string>
     <string name="today_empty">还没有进行中的计划</string>
@@ -65,9 +65,9 @@
     <string name="e1rm_hint">按 Epley 公式估算的 1RM，取历史最好一组</string>
     <string name="e1rm_empty">还没有数据，完成一次训练后生成</string>
     <string name="reminder_title">今天该练了</string>
-    <string name="reminder_body">下一个课表：%1$s（%2$s）</string>
+    <string name="reminder_body">下一个训练计划：%1$s（%2$s）</string>
     <string name="settings_reminder_title">训练提醒</string>
-    <string name="settings_reminder_body">每天 18:00 提醒当天的课表</string>
+    <string name="settings_reminder_body">提醒</string>
     <string name="settings_export_title">导出数据</string>
     <string name="settings_export_body">JSON 可完整备份，CSV 可直接拖进 Excel</string>
     <string name="settings_export_json">导出 JSON</string>
@@ -82,7 +82,7 @@
     <string name="body_fat">体脂 %</string>
     <string name="body_add">记录</string>
     <string name="body_save">保存</string>
-    <string name="sync_title">备份与同步（WebDAV）</string>
+    <string name="sync_title">备份与同步</string>
     <string name="sync_hint">自己填服务器地址与账号密码；坚果云填 https://dav.jianguoyun.com/dav/ 并在网页端生成应用密码</string>
     <string name="sync_url">服务器地址</string>
     <string name="sync_user">用户名 / 邮箱</string>
@@ -93,7 +93,7 @@
     <string name="sync_last">上次同步：%1$s</string>
     <string name="debug_notify">调试：测试通知</string>
     <string name="debug_trigger">立即触发</string>
-    <string name="sync_entry_hint">WebDAV 备份与多设备同步</string>
+    <string name="sync_entry_hint">多设备备份与恢复</string>
     <string name="theme_title">主题</string>
     <string name="theme_system">跟随系统</string>
     <string name="theme_light">浅色</string>
@@ -156,4 +156,24 @@
     <string name="theme_language_title">语言</string>
     <string name="theme_language_hint">切换后界面立即重载</string>
     <string name="lang_system">跟随系统</string>
+    <string name="about_title">关于 PlanLift</string>
+    <string name="about_entry_hint">版本、开源协议与简介</string>
+    <string name="about_version">版本 %1$s</string>
+    <string name="about_intro_title">简介</string>
+    <string name="about_intro_body">PlanLift 是一个离线优先的训练计划 App：内置 16 套成品计划，按次数与 RIR 自动计算下次该加多少重量，支持 WebDAV 多设备同步。所有数据保存在你自己的设备与你自己的服务器上。</string>
+    <string name="about_license_title">开源协议</string>
+    <string name="about_license_body">MIT License · 源码托管在 GitHub，可自由使用、修改与分发，保留版权声明即可。</string>
+    <string name="font_page_hint">选择一种字体族，下面的示例会立刻按该字体渲染</string>
+    <string name="font_preview_text">今日训练 · 杠铃深蹲 3 组 × 8 次</string>
+    <string name="font_note_title">说明</string>
+    <string name="font_note_body">部分字体族在中文上可能表现接近，取决于系统自带的 CJK 字重；西文与数字的差异会更明显。</string>
+    <string name="theme_font_current">字体</string>
+    <string name="scale_follow_system">跟随系统</string>
+    <string name="scale_custom">自定义</string>
+    <string name="scale_small">小</string>
+    <string name="scale_large">大</string>
+    <string name="progress_done_of">%1$d / %2$d 次</string>
+    <string name="progress_streak">连续打卡 %1$d 天</string>
+    <string name="progress_week_sets">本周每天组数</string>
+    <string name="progress_target_hint">本周目标：完成 %1$d 次训练</string>
 </resources>

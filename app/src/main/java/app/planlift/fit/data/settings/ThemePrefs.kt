@@ -21,6 +21,8 @@ data class ThemeSettings(
     val pureBlack: Boolean = false,
     val colorStyle: ColorStyle = ColorStyle.TONAL,
     val font: FontStyle = FontStyle.SYSTEM,
+    /** 文本缩放：true=跟随系统，false=用 textScale */
+    val followSystemScale: Boolean = true,
     val textScale: Float = 1.0f,
     val ripple: Boolean = true,
     val navFloating: Boolean = false,
@@ -60,6 +62,7 @@ object ThemePrefs {
             font = runCatching {
                 FontStyle.valueOf(p.getString("theme_font", defaults.font.name)!!)
             }.getOrDefault(defaults.font),
+            followSystemScale = p.getBoolean("theme_scale_follow_system", true),
             textScale = p.getFloat("theme_text_scale", defaults.textScale),
             ripple = p.getBoolean("theme_ripple", defaults.ripple),
             navFloating = p.getBoolean("theme_nav_floating", defaults.navFloating),
@@ -79,6 +82,7 @@ object ThemePrefs {
             .putBoolean("theme_pure_black", settings.pureBlack)
             .putString("theme_style", settings.colorStyle.name)
             .putString("theme_font", settings.font.name)
+            .putBoolean("theme_scale_follow_system", settings.followSystemScale)
             .putFloat("theme_text_scale", settings.textScale)
             .putBoolean("theme_ripple", settings.ripple)
             .putBoolean("theme_nav_floating", settings.navFloating)

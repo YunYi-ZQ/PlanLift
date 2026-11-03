@@ -1,9 +1,10 @@
 package app.planlift.fit.ui.progress
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,6 +12,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -29,6 +34,10 @@ import kotlinx.coroutines.launch
 data class ProgressState(
     val loading: Boolean = true,
     val weekly: Map<String, Int> = emptyMap(),
+    val weeklyDone: Int = 0,
+    val weeklyTarget: Int = 0,
+    val streak: Int = 0,
+    val perDay: List<Int> = List(7) { 0 },
     val e1rm: List<Triple<String, Double, SetLogEntity>> = emptyList(),
     val metrics: List<BodyMetricEntity> = emptyList()
 )
@@ -41,9 +50,15 @@ class ProgressViewModel(container: AppContainer) : ViewModel() {
     init { reload() }
 
     private fun reload() = viewModelScope.launch {
+        val enrollment = repo.activeEnrollmentOnce()
+        val plan = enrollment?.let { repo.plan(it.planId) }
         _state.value = ProgressState(
             loading = false,
             weekly = repo.weeklySetsByMuscle(),
+            weeklyDone = repo.weeklyDoneCount(),
+            weeklyTarget = plan?.daysPerWeek ?: 0,
+            streak = repo.streakDays(),
+            perDay = repo.weeklySetsByDay().toList(),
             e1rm = repo.bestE1rm(),
             metrics = repo.allMetricsOnce()
         )
@@ -65,6 +80,8 @@ private val MUSCLE_EN = mapOf(
     "chest" to "Chest", "back" to "Back", "shoulders" to "Shoulders", "biceps" to "Biceps",
     "triceps" to "Triceps", "core" to "Core", "cardio" to "Cardio", "other" to "Other"
 )
+private val DAY_LABELS_ZH = listOf("一", "二", "三", "四", "五", "六", "日")
+private val DAY_LABELS_EN = listOf("M", "T", "W", "T", "F", "S", "S")
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -95,11 +112,11 @@ fun ProgressScreen(isZh: Boolean) {
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             item {
-                BodyCard(
-                    metrics = state.metrics,
-                    isZh = isZh,
-                    onAdd = { showMetricDialog = true }
-                )
+                WeekOverviewCard(state = state)
+            }
+
+            item {
+                BodyCard(metrics = state.metrics, isZh = isZh, onAdd = { showMetricDialog = true })
             }
 
             item {
@@ -204,6 +221,124 @@ fun ProgressScreen(isZh: Boolean) {
 }
 
 @Composable
+private fun WeekOverviewCard(state: ProgressState) {
+    SectionCard {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            val done = state.weeklyDone
+            val target = state.weeklyTarget.coerceAtLeast(1)
+            val progress = (done.toFloat() / target).coerceIn(0f, 1f)
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.size(96.dp)) {
+                val track = MaterialTheme.colorScheme.surfaceContainerHighest
+                val accent = MaterialTheme.colorScheme.primary
+                Canvas(Modifier.fillMaxSize()) {
+                    val stroke = 12.dp.toPx()
+                    val inset = stroke / 2
+                    drawArc(
+                        color = track,
+                        startAngle = -90f,
+                        sweepAngle = 360f,
+                        useCenter = false,
+                        topLeft = Offset(inset, inset),
+                        size = Size(size.width - stroke, size.height - stroke),
+                        style = Stroke(width = stroke, cap = StrokeCap.Round)
+                    )
+                    drawArc(
+                        color = accent,
+                        startAngle = -90f,
+                        sweepAngle = 360f * progress,
+                        useCenter = false,
+                        topLeft = Offset(inset, inset),
+                        size = Size(size.width - stroke, size.height - stroke),
+                        style = Stroke(width = stroke, cap = StrokeCap.Round)
+                    )
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        "$done",
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        "/ $target",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+            Spacer(Modifier.width(18.dp))
+            Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text(
+                    stringResource(R.string.progress_done_of, state.weeklyDone, state.weeklyTarget),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text(
+                    stringResource(R.string.progress_streak, state.streak),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                if (state.weeklyTarget > 0) {
+                    Text(
+                        stringResource(R.string.progress_target_hint, state.weeklyTarget),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
+
+        Spacer(Modifier.height(16.dp))
+        Text(
+            stringResource(R.string.progress_week_sets),
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Spacer(Modifier.height(8.dp))
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .height(88.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            val maxSets = (state.perDay.maxOrNull() ?: 0).coerceAtLeast(1)
+            state.perDay.forEachIndexed { index, sets ->
+                val ratio = sets.toFloat() / maxSets
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.width(34.dp)
+                ) {
+                    Text(
+                        if (sets > 0) "$sets" else "",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(Modifier.height(3.dp))
+                    Box(
+                        Modifier
+                            .width(18.dp)
+                            .height((6 + 52 * ratio).dp)
+                            .background(
+                                if (sets > 0) MaterialTheme.colorScheme.primary
+                                else MaterialTheme.colorScheme.surfaceContainerHighest,
+                                RoundedCornerShape(6.dp)
+                            )
+                    )
+                    Spacer(Modifier.height(4.dp))
+                    Text(
+                        if (java.util.Locale.getDefault().language.startsWith("zh")) DAY_LABELS_ZH[index]
+                        else DAY_LABELS_EN[index],
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
 private fun BodyCard(metrics: List<BodyMetricEntity>, isZh: Boolean, onAdd: () -> Unit) {
     SectionCard {
         Row(
@@ -236,14 +371,6 @@ private fun BodyCard(metrics: List<BodyMetricEntity>, isZh: Boolean, onAdd: () -
                 stringResource(R.string.body_latest, parts.joinToString(" · ")),
                 style = MaterialTheme.typography.bodyMedium
             )
-            if (metrics.size > 1) {
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    (if (isZh) "共 ${metrics.size} 条记录" else "${metrics.size} entries"),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
         }
     }
 }

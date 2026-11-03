@@ -24,6 +24,7 @@ import app.planlift.fit.data.reminder.ReminderScheduler
 import app.planlift.fit.data.settings.ThemeMode
 import app.planlift.fit.data.settings.ThemePrefs
 import app.planlift.fit.ui.common.SectionCard
+import app.planlift.fit.ui.common.pressable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +32,8 @@ fun SettingsScreen(
     isZh: Boolean,
     onOpenSync: () -> Unit,
     onOpenExport: () -> Unit,
-    onOpenTheme: () -> Unit
+    onOpenTheme: () -> Unit,
+    onOpenAbout: () -> Unit
 ) {
     val ctx = LocalContext.current
     var reminder by remember { mutableStateOf(ReminderScheduler.isEnabled(ctx)) }
@@ -96,6 +98,12 @@ fun SettingsScreen(
                     subtitle = stringResource(R.string.settings_export_body),
                     onClick = onOpenExport
                 )
+                HorizontalDivider(Modifier.padding(vertical = 6.dp))
+                MenuRow(
+                    title = stringResource(R.string.about_title),
+                    subtitle = stringResource(R.string.about_entry_hint),
+                    onClick = onOpenAbout
+                )
             }
 
             SectionCard {
@@ -121,11 +129,6 @@ fun SettingsScreen(
                             stringResource(R.string.settings_reminder_title),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            stringResource(R.string.settings_reminder_body),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                     Switch(checked = reminder, onCheckedChange = null)
@@ -185,20 +188,6 @@ fun SettingsScreen(
                 }
             }
 
-            SectionCard {
-                Text(
-                    stringResource(R.string.settings_about_title),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(Modifier.height(6.dp))
-                Text(
-                    stringResource(R.string.settings_about_body, BuildConfig.VERSION_NAME),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-            }
-
             SectionCard(container = MaterialTheme.colorScheme.errorContainer) {
                 Text(
                     stringResource(R.string.settings_disclaimer_title),
@@ -246,8 +235,8 @@ private fun MenuRow(title: String, subtitle: String, onClick: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp)
+            .pressable(onClick = onClick),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {

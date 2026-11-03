@@ -34,7 +34,7 @@ import app.planlift.fit.ui.common.SectionCard
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ThemeScreen(onBack: () -> Unit) {
+fun ThemeScreen(onBack: () -> Unit, onOpenFont: () -> Unit) {
     val ctx = LocalContext.current
     val s by ThemePrefs.state.collectAsState()
 
@@ -152,7 +152,7 @@ fun ThemeScreen(onBack: () -> Unit) {
                     ColorStyle.entries.forEach { style ->
                         FilterChip(
                             selected = s.colorStyle == style,
-                            onClick = { ThemePrefs.update(ctx, s.copy(colorStyle = style)) },
+                            onClick = { ThemePrefs.update(ctx, s.copy(colorStyle = style, dynamic = false)) },
                             label = {
                                 Text(
                                     when (style) {
@@ -201,39 +201,80 @@ fun ThemeScreen(onBack: () -> Unit) {
                     fontWeight = FontWeight.SemiBold
                 )
                 Spacer(Modifier.height(8.dp))
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    FontStyle.entries.forEach { f ->
-                        FilterChip(
-                            selected = s.font == f,
-                            onClick = { ThemePrefs.update(ctx, s.copy(font = f)) },
-                            label = {
-                                Text(
-                                    when (f) {
-                                        FontStyle.SYSTEM -> stringResource(R.string.font_system)
-                                        FontStyle.SERIF -> stringResource(R.string.font_serif)
-                                        FontStyle.MONOSPACE -> stringResource(R.string.font_mono)
-                                        FontStyle.CURSIVE -> stringResource(R.string.font_cursive)
-                                    }
-                                )
-                            }
+                Spacer(Modifier.height(10.dp))
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable(onClick = onOpenFont)
+                        .padding(vertical = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        stringResource(R.string.theme_font_current),
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            when (s.font) {
+                                FontStyle.SYSTEM -> stringResource(R.string.font_system)
+                                FontStyle.SERIF -> stringResource(R.string.font_serif)
+                                FontStyle.MONOSPACE -> stringResource(R.string.font_mono)
+                                FontStyle.CURSIVE -> stringResource(R.string.font_cursive)
+                            },
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.primary
                         )
+                        Text("  ›", color = MaterialTheme.colorScheme.outline)
                     }
                 }
 
-                Spacer(Modifier.height(14.dp))
+                HorizontalDivider(Modifier.padding(vertical = 6.dp))
+
                 Text(
                     stringResource(R.string.theme_text_scale_title),
                     style = MaterialTheme.typography.labelLarge
                 )
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    listOf(0.9f, 1.0f, 1.15f, 1.3f).forEach { scale ->
-                        FilterChip(
-                            selected = kotlin.math.abs(s.textScale - scale) < 0.01f,
-                            onClick = { ThemePrefs.update(ctx, s.copy(textScale = scale)) },
-                            label = { Text("${(scale * 100).toInt()}%") }
+                    FilterChip(
+                        selected = s.followSystemScale,
+                        onClick = { ThemePrefs.update(ctx, s.copy(followSystemScale = true)) },
+                        label = { Text(stringResource(R.string.scale_follow_system)) }
+                    )
+                    FilterChip(
+                        selected = !s.followSystemScale,
+                        onClick = { ThemePrefs.update(ctx, s.copy(followSystemScale = false)) },
+                        label = { Text(stringResource(R.string.scale_custom)) }
+                    )
+                }
+                if (!s.followSystemScale) {
+                    Row(
+                        Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            stringResource(R.string.scale_small),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            "${(s.textScale * 100).toInt()}%",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Text(
+                            stringResource(R.string.scale_large),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
+                    Slider(
+                        value = s.textScale,
+                        onValueChange = { ThemePrefs.update(ctx, s.copy(textScale = it)) },
+                        valueRange = 0.8f..1.4f,
+                        steps = 5
+                    )
                 }
             }
 

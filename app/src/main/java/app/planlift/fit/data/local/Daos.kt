@@ -87,6 +87,12 @@ interface SessionDao {
     @Query("SELECT * FROM training_session")
     suspend fun getAll(): List<SessionEntity>
 
+    @Query("SELECT * FROM training_session WHERE deleted = 0 AND date >= :since ORDER BY date ASC")
+    suspend fun sessionsSince(since: Long): List<SessionEntity>
+
+    @Query("SELECT date FROM training_session WHERE deleted = 0 ORDER BY date DESC")
+    suspend fun allDates(): List<Long>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(items: List<SessionEntity>)
 }

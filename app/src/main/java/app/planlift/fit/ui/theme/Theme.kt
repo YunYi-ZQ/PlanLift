@@ -125,6 +125,7 @@ fun PlanLiftTheme(
     colorStyle: ColorStyle = ColorStyle.TONAL,
     fontStyle: FontStyle = FontStyle.SYSTEM,
     textScale: Float = 1.0f,
+    followSystemScale: Boolean = true,
     ripple: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -154,10 +155,11 @@ fun PlanLiftTheme(
     }
 
     val density = LocalDensity.current
-    val scaled = if (textScale == 1.0f) {
+    val effective = if (followSystemScale) 1f else textScale
+    val scaled = if (effective == 1f) {
         density
     } else {
-        androidx.compose.ui.unit.Density(density.density, density.fontScale * textScale)
+        androidx.compose.ui.unit.Density(density.density, density.fontScale * effective)
     }
 
     if (ripple) {

@@ -21,6 +21,7 @@ import app.planlift.fit.data.content.PlanDto
 import app.planlift.fit.data.content.title
 import app.planlift.fit.ui.common.Pill
 import app.planlift.fit.ui.common.rememberVm
+import app.planlift.fit.ui.common.pressable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -260,7 +261,7 @@ private fun PlanCard(plan: PlanDto, isZh: Boolean, onClick: () -> Unit) {
         color = MaterialTheme.colorScheme.surfaceContainerLow,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .pressable(onClick = onClick)
     ) {
         Column(Modifier.padding(16.dp)) {
             Row(

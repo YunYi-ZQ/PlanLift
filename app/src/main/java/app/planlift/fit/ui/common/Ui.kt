@@ -1,11 +1,19 @@
 package app.planlift.fit.ui.common
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -95,4 +103,20 @@ fun Stepper(
             modifier = Modifier.size(36.dp)
         ) { Text("+", style = MaterialTheme.typography.titleMedium) }
     }
+}
+
+
+/** 按下时轻微缩放，替代/叠加水波纹，手感更接近 FlClash */
+@Composable
+fun Modifier.pressable(onClick: () -> Unit, pressedScale: Float = 0.97f): Modifier {
+    val source = remember { MutableInteractionSource() }
+    val pressed by source.collectIsPressedAsState()
+    val scale by animateFloatAsState(
+        targetValue = if (pressed) pressedScale else 1f,
+        animationSpec = tween(durationMillis = 90),
+        label = "pressScale"
+    )
+    return this
+        .graphicsLayer { scaleX = scale; scaleY = scale }
+        .clickable(interactionSource = source, indication = null, onClick = onClick)
 }
