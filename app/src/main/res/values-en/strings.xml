@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlanLift</string>
+    <string name="app_slogan">Plan first. Load follows.</string>
+
+    <string name="nav_today">Today</string>
+    <string name="nav_plans">Plans</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_settings">Me</string>
+
+    <string name="today_title">Today\'s Workout</string>
+    <string name="today_empty">No active plan yet</string>
+    <string name="today_hint">Pick a plan. Eight weeks from now you will thank yourself.</string>
+    <string name="action_start_workout">Start workout</string>
+    <string name="action_browse_plans">Browse plans</string>
+
+    <string name="w0_title">Environment check build v0.1.0</string>
+    <string name="w0_item_build">Toolchain: AGP 8.2 · Gradle 8.5 · Kotlin 2.0</string>
+    <string name="w0_item_i18n">Locales: English / 简体中文</string>
+    <string name="w0_item_device">Target device: Redmi K60 (arm64)</string>
+    <string name="w0_language_current">Language: %1$s</string>
+</resources>

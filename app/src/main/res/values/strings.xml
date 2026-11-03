@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlanLift</string>
+    <string name="app_slogan">计划先行，重量跟上</string>
+
+    <string name="nav_today">今日</string>
+    <string name="nav_plans">计划库</string>
+    <string name="nav_progress">进度</string>
+    <string name="nav_settings">我的</string>
+
+    <string name="today_title">今日训练</string>
+    <string name="today_empty">还没有进行中的计划</string>
+    <string name="today_hint">从计划库选一套，8 周之后你会感谢现在的自己。</string>
+    <string name="action_start_workout">开始训练</string>
+    <string name="action_browse_plans">去看看计划</string>
+
+    <string name="w0_title">环境验证版本 v0.1.0</string>
+    <string name="w0_item_build">构建链路：AGP 8.2 · Gradle 8.5 · Kotlin 2.0</string>
+    <string name="w0_item_i18n">双语资源：简体中文 / English</string>
+    <string name="w0_item_device">目标设备：Redmi K60（arm64）</string>
+    <string name="w0_language_current">当前语言：%1$s</string>
+</resources>
