@@ -51,7 +51,7 @@
     <string name="history_empty">还没有训练记录</string>
 
     <string name="settings_about_title">关于 PlanLift</string>
-    <string name="settings_about_body">v0.2.0 · 离线优先的训练计划 App。内置 16 套计划、38 个动作，数据全部保存在本机。</string>
+    <string name="settings_about_body">%1$s · 离线优先的训练计划 App。内置 16 套计划、38 个动作，数据全部保存在本机。</string>
     <string name="settings_next_title">即将加入</string>
     <string name="settings_next_body">自动加重引擎（第 2 周）、每周组数看板、e1RM 曲线、WebDAV 同步（第 4 周）。</string>
     <string name="settings_disclaimer_title">健康提示</string>
@@ -64,4 +64,22 @@
     <string name="e1rm_title">力量进度</string>
     <string name="e1rm_hint">按 Epley 公式估算的 1RM，取历史最好一组</string>
     <string name="e1rm_empty">还没有数据，完成一次训练后生成</string>
+    <string name="reminder_title">今天该练了</string>
+    <string name="reminder_body">下一个课表：%1$s（%2$s）</string>
+    <string name="settings_reminder_title">训练提醒</string>
+    <string name="settings_reminder_body">每天 18:00 提醒当天的课表</string>
+    <string name="settings_export_title">导出数据</string>
+    <string name="settings_export_body">JSON 可完整备份，CSV 可直接拖进 Excel</string>
+    <string name="settings_export_json">导出 JSON</string>
+    <string name="settings_export_csv">导出 CSV</string>
+    <string name="settings_export_done">已保存：%1$s</string>
+    <string name="body_title">身体数据</string>
+    <string name="body_empty">还没有记录，点右侧按钮添加</string>
+    <string name="body_latest">最近：%1$s</string>
+    <string name="body_weight">体重 kg</string>
+    <string name="body_waist">腰围 cm</string>
+    <string name="body_hip">臀围 cm</string>
+    <string name="body_fat">体脂 %</string>
+    <string name="body_add">记录</string>
+    <string name="body_save">保存</string>
 </resources>

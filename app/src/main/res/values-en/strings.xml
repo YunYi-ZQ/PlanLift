@@ -51,7 +51,7 @@
     <string name="history_empty">No workouts logged yet</string>
 
     <string name="settings_about_title">About PlanLift</string>
-    <string name="settings_about_body">v0.2.0 · Offline-first training planner. 16 built-in plans, 38 exercises, all data stays on this device.</string>
+    <string name="settings_about_body">%1$s · Offline-first training planner. 16 built-in plans, 38 exercises, all data stays on this device.</string>
     <string name="settings_next_title">Coming next</string>
     <string name="settings_next_body">Auto-progression engine (week 2), weekly set dashboard, e1RM curves, WebDAV sync (week 4).</string>
     <string name="settings_disclaimer_title">Health notice</string>
@@ -64,4 +64,22 @@
     <string name="e1rm_title">Strength progress</string>
     <string name="e1rm_hint">Estimated 1RM (Epley) from your best set so far</string>
     <string name="e1rm_empty">No data yet — finish a workout first</string>
+    <string name="reminder_title">Time to train</string>
+    <string name="reminder_body">Next up: %1$s (%2$s)</string>
+    <string name="settings_reminder_title">Workout reminder</string>
+    <string name="settings_reminder_body">Daily nudge at 18:00 with today\'s session</string>
+    <string name="settings_export_title">Export data</string>
+    <string name="settings_export_body">JSON for a full backup, CSV for spreadsheets</string>
+    <string name="settings_export_json">Export JSON</string>
+    <string name="settings_export_csv">Export CSV</string>
+    <string name="settings_export_done">Saved: %1$s</string>
+    <string name="body_title">Body metrics</string>
+    <string name="body_empty">Nothing logged yet — tap the button</string>
+    <string name="body_latest">Latest: %1$s</string>
+    <string name="body_weight">Weight kg</string>
+    <string name="body_waist">Waist cm</string>
+    <string name="body_hip">Hip cm</string>
+    <string name="body_fat">Body fat %</string>
+    <string name="body_add">Log</string>
+    <string name="body_save">Save</string>
 </resources>

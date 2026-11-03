@@ -130,6 +130,29 @@ class WorkoutRepository(
 
     suspend fun setsOf(sessionId: String): List<SetLogEntity> = setLogDao.bySession(sessionId)
 
+    fun observeMetrics() = metricDao.observeAll()
+
+    suspend fun addMetric(weightKg: Double?, bodyFat: Double?, waistCm: Double?, hipCm: Double?) {
+        val now = System.currentTimeMillis()
+        metricDao.upsert(
+            app.planlift.fit.data.local.BodyMetricEntity(
+                id = UUID.randomUUID().toString(),
+                date = now,
+                weightKg = weightKg,
+                bodyFat = bodyFat,
+                waistCm = waistCm,
+                hipCm = hipCm,
+                updatedAt = now,
+                rev = 1,
+                deviceId = deviceId
+            )
+        )
+    }
+
+    suspend fun allSessionsOnce(): List<SessionEntity> = sessionDao.observeAllOnce()
+
+    suspend fun allMetricsOnce() = metricDao.observeAllOnce()
+
     /**
      * 为一天的每个动作算出「下次该用多重、做几次」。
      * 依据上一次同动作的实际表现 + 目标的次数区间 / RIR。

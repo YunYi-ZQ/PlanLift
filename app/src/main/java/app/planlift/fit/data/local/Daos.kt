@@ -45,6 +45,9 @@ interface SessionDao {
     @Query("SELECT * FROM training_session WHERE deleted = 0 ORDER BY date DESC")
     fun observeAll(): Flow<List<SessionEntity>>
 
+    @Query("SELECT * FROM training_session WHERE deleted = 0 ORDER BY date DESC")
+    suspend fun observeAllOnce(): List<SessionEntity>
+
     @Query("SELECT * FROM training_session WHERE deleted = 0 ORDER BY date DESC LIMIT :limit")
     fun observeRecent(limit: Int): Flow<List<SessionEntity>>
 
@@ -97,6 +100,9 @@ interface SetLogDao {
 interface MetricDao {
     @Query("SELECT * FROM body_metric WHERE deleted = 0 ORDER BY date DESC")
     fun observeAll(): Flow<List<BodyMetricEntity>>
+
+    @Query("SELECT * FROM body_metric WHERE deleted = 0 ORDER BY date DESC")
+    suspend fun observeAllOnce(): List<BodyMetricEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun upsert(metric: BodyMetricEntity)

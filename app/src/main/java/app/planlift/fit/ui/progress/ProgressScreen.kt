@@ -1,14 +1,14 @@
 package app.planlift.fit.ui.progress
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.planlift.fit.AppContainer
 import app.planlift.fit.R
+import app.planlift.fit.data.local.BodyMetricEntity
 import app.planlift.fit.data.local.SetLogEntity
 import app.planlift.fit.ui.common.SectionCard
 import app.planlift.fit.ui.common.rememberVm
@@ -28,7 +29,8 @@ import kotlinx.coroutines.launch
 data class ProgressState(
     val loading: Boolean = true,
     val weekly: Map<String, Int> = emptyMap(),
-    val e1rm: List<Triple<String, Double, SetLogEntity>> = emptyList()
+    val e1rm: List<Triple<String, Double, SetLogEntity>> = emptyList(),
+    val metrics: List<BodyMetricEntity> = emptyList()
 )
 
 class ProgressViewModel(container: AppContainer) : ViewModel() {
@@ -36,14 +38,20 @@ class ProgressViewModel(container: AppContainer) : ViewModel() {
     private val _state = MutableStateFlow(ProgressState())
     val state = _state.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            _state.value = ProgressState(
-                loading = false,
-                weekly = repo.weeklySetsByMuscle(),
-                e1rm = repo.bestE1rm()
-            )
-        }
+    init { reload() }
+
+    private fun reload() = viewModelScope.launch {
+        _state.value = ProgressState(
+            loading = false,
+            weekly = repo.weeklySetsByMuscle(),
+            e1rm = repo.bestE1rm(),
+            metrics = repo.allMetricsOnce()
+        )
+    }
+
+    fun addMetric(weight: Double?, fat: Double?, waist: Double?, hip: Double?) = viewModelScope.launch {
+        repo.addMetric(weight, fat, waist, hip)
+        reload()
     }
 }
 
@@ -63,6 +71,7 @@ private val MUSCLE_EN = mapOf(
 fun ProgressScreen(isZh: Boolean) {
     val vm = rememberVm { ProgressViewModel(it) }
     val state by vm.state.collectAsState()
+    var showMetricDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -85,6 +94,14 @@ fun ProgressScreen(isZh: Boolean) {
             contentPadding = PaddingValues(16.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
+            item {
+                BodyCard(
+                    metrics = state.metrics,
+                    isZh = isZh,
+                    onAdd = { showMetricDialog = true }
+                )
+            }
+
             item {
                 SectionCard {
                     Text(
@@ -174,6 +191,114 @@ fun ProgressScreen(isZh: Boolean) {
             }
         }
     }
+
+    if (showMetricDialog) {
+        MetricDialog(
+            onDismiss = { showMetricDialog = false },
+            onSave = { w, f, wa, h ->
+                vm.addMetric(w, f, wa, h)
+                showMetricDialog = false
+            }
+        )
+    }
+}
+
+@Composable
+private fun BodyCard(metrics: List<BodyMetricEntity>, isZh: Boolean, onAdd: () -> Unit) {
+    SectionCard {
+        Row(
+            Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                stringResource(R.string.body_title),
+                style = MaterialTheme.typography.titleSmall,
+                fontWeight = FontWeight.SemiBold
+            )
+            TextButton(onClick = onAdd) { Text(stringResource(R.string.body_add)) }
+        }
+        val latest = metrics.firstOrNull()
+        if (latest == null) {
+            Text(
+                stringResource(R.string.body_empty),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            val parts = buildList {
+                latest.weightKg?.let { add("${if (isZh) "体重" else "Weight"} ${fmt(it)} kg") }
+                latest.bodyFat?.let { add("${if (isZh) "体脂" else "Fat"} ${fmt(it)}%") }
+                latest.waistCm?.let { add("${if (isZh) "腰围" else "Waist"} ${fmt(it)} cm") }
+                latest.hipCm?.let { add("${if (isZh) "臀围" else "Hip"} ${fmt(it)} cm") }
+            }
+            Text(
+                stringResource(R.string.body_latest, parts.joinToString(" · ")),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            if (metrics.size > 1) {
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    (if (isZh) "共 ${metrics.size} 条记录" else "${metrics.size} entries"),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun MetricDialog(
+    onDismiss: () -> Unit,
+    onSave: (Double?, Double?, Double?, Double?) -> Unit
+) {
+    var weight by remember { mutableStateOf("") }
+    var fat by remember { mutableStateOf("") }
+    var waist by remember { mutableStateOf("") }
+    var hip by remember { mutableStateOf("") }
+
+    fun num(s: String): Double? = s.trim().toDoubleOrNull()
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.body_title)) },
+        text = {
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .imePadding(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                MetricField(stringResource(R.string.body_weight), weight) { weight = it }
+                MetricField(stringResource(R.string.body_fat), fat) { fat = it }
+                MetricField(stringResource(R.string.body_waist), waist) { waist = it }
+                MetricField(stringResource(R.string.body_hip), hip) { hip = it }
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = { onSave(num(weight), num(fat), num(waist), num(hip)) }) {
+                Text(stringResource(R.string.body_save))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
+        }
+    )
+}
+
+@Composable
+private fun MetricField(label: String, value: String, onChange: (String) -> Unit) {
+    OutlinedTextField(
+        value = value,
+        onValueChange = { v -> onChange(v.filter { it.isDigit() || it == '.' }) },
+        label = { Text(label) },
+        singleLine = true,
+        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
+            keyboardType = androidx.compose.ui.text.input.KeyboardType.Decimal
+        ),
+        modifier = Modifier.fillMaxWidth()
+    )
 }
 
 @Composable
