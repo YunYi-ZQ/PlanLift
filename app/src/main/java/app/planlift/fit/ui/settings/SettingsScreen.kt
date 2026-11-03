@@ -100,7 +100,19 @@ fun SettingsScreen(
 
             SectionCard {
                 Row(
-                    Modifier.fillMaxWidth(),
+                    Modifier
+                        .fillMaxWidth()
+                        .clickable {
+                            if (!reminder) {
+                                ensurePermissionThen {
+                                    ReminderScheduler.setEnabled(ctx, true)
+                                    reminder = true
+                                }
+                            } else {
+                                ReminderScheduler.setEnabled(ctx, false)
+                                reminder = false
+                            }
+                        },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
@@ -116,18 +128,7 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    Switch(
-                        checked = reminder,
-                        onCheckedChange = { on ->
-                            if (on) ensurePermissionThen {
-                                ReminderScheduler.setEnabled(ctx, true)
-                                reminder = true
-                            } else {
-                                ReminderScheduler.setEnabled(ctx, false)
-                                reminder = false
-                            }
-                        }
-                    )
+                    Switch(checked = reminder, onCheckedChange = null)
                 }
                 if (reminder) {
                     HorizontalDivider(Modifier.padding(vertical = 8.dp))

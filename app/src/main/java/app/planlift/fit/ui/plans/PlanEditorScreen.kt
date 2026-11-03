@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,7 +20,6 @@ import app.planlift.fit.data.content.DayDto
 import app.planlift.fit.data.content.ExerciseDto
 import app.planlift.fit.data.content.PlanDto
 import app.planlift.fit.data.content.SlotDto
-import app.planlift.fit.data.content.isChinese
 import app.planlift.fit.ui.common.SectionCard
 import app.planlift.fit.ui.common.Stepper
 import app.planlift.fit.ui.common.rememberVm
@@ -38,7 +36,7 @@ data class EditorSlot(
 )
 
 data class EditorDay(
-    val name: String,
+    val weekday: Int,
     val slots: List<EditorSlot>
 )
 
@@ -51,18 +49,17 @@ class PlanEditorViewModel(
 
     var name by mutableStateOf("")
         private set
-    var dayCount by mutableIntStateOf(3)
+    var weekdays by mutableStateOf(listOf(0, 2, 4))
         private set
     var days by mutableStateOf<List<EditorDay>>(emptyList())
         private set
     var exercises by mutableStateOf<List<ExerciseDto>>(emptyList())
         private set
-    var loaded by mutableStateOf(false)
-        private set
     var isEditing by mutableStateOf(false)
         private set
 
     private var existingPlan: PlanDto? = null
+    private val slotMap = mutableMapOf<Int, List<EditorSlot>>()
 
     init {
         viewModelScope.launch {
@@ -72,46 +69,48 @@ class PlanEditorViewModel(
                 existingPlan?.let { p ->
                     isEditing = true
                     name = p.zh
-                    dayCount = p.days.size
-                    days = p.days.map { d ->
-                        EditorDay(
-                            name = d.zh,
-                            slots = d.slots.filter { !it.isBlank }.map { s ->
-                                EditorSlot(
-                                    exId = s.ex,
-                                    name = content.exercises()[s.ex]?.zh ?: s.ex,
-                                    sets = s.sets,
-                                    repMin = s.repMin,
-                                    repMax = s.repMax,
-                                    rest = s.rest
-                                )
-                            }
-                        )
+                    weekdays = if (p.weekdays.isNotEmpty()) {
+                        p.weekdays
+                    } else {
+                        p.days.indices.map { it }.toList()
+                    }
+                    p.days.forEachIndexed { index, d ->
+                        val weekday = weekdays.getOrElse(index) { index }
+                        slotMap[weekday] = d.slots.filter { !it.isBlank }.map { s ->
+                            EditorSlot(
+                                exId = s.ex,
+                                name = content.exercises()[s.ex]?.zh ?: s.ex,
+                                sets = s.sets,
+                                repMin = s.repMin,
+                                repMax = s.repMax,
+                                rest = s.rest
+                            )
+                        }
                     }
                 }
             }
-            if (days.isEmpty()) {
-                days = (1..dayCount).map { EditorDay(dayLetter(it), emptyList()) }
-            }
-            loaded = true
+            rebuild()
         }
+    }
+
+    private fun rebuild() {
+        days = weekdays.sorted().map { wd -> EditorDay(wd, slotMap[wd].orEmpty()) }
     }
 
     fun updateName(v: String) {
         name = v
     }
 
-    fun updateDayCount(n: Int) {
-        dayCount = n
-        val current = days.toMutableList()
-        while (current.size < n) current.add(EditorDay(dayLetter(current.size + 1), emptyList()))
-        while (current.size > n) current.removeAt(current.size - 1)
-        days = current
+    fun toggleWeekday(weekday: Int) {
+        weekdays = if (weekday in weekdays) {
+            if (weekdays.size == 1) weekdays else weekdays - weekday
+        } else {
+            (weekdays + weekday).sorted()
+        }
+        rebuild()
     }
 
-    fun addSlot(dayIndex: Int, ex: ExerciseDto) {
-        val current = days.toMutableList()
-        val day = current[dayIndex]
+    fun addSlot(weekday: Int, ex: ExerciseDto) {
         val slot = EditorSlot(
             exId = ex.id,
             name = ex.zh,
@@ -120,36 +119,35 @@ class PlanEditorViewModel(
             repMax = 12,
             rest = if (ex.primary in setOf("quads", "glutes", "hams", "back", "chest")) 120 else 90
         )
-        current[dayIndex] = day.copy(slots = day.slots + slot)
-        days = current
+        slotMap[weekday] = slotMap[weekday].orEmpty() + slot
+        rebuild()
     }
 
-    fun removeSlot(dayIndex: Int, slotIndex: Int) {
-        val current = days.toMutableList()
-        val day = current[dayIndex]
-        if (slotIndex !in day.slots.indices) return
-        current[dayIndex] = day.copy(slots = day.slots.filterIndexed { i, _ -> i != slotIndex })
-        days = current
+    fun removeSlot(weekday: Int, slotIndex: Int) {
+        val list = slotMap[weekday].orEmpty().toMutableList()
+        if (slotIndex in list.indices) {
+            list.removeAt(slotIndex)
+            slotMap[weekday] = list
+            rebuild()
+        }
     }
 
-    fun changeSets(dayIndex: Int, slotIndex: Int, delta: Int) =
-        updateSlot(dayIndex, slotIndex) { it.copy(sets = (it.sets + delta).coerceIn(1, 8)) }
+    fun changeSets(weekday: Int, slotIndex: Int, delta: Int) =
+        updateSlot(weekday, slotIndex) { it.copy(sets = (it.sets + delta).coerceIn(1, 8)) }
 
-    fun changeReps(dayIndex: Int, slotIndex: Int, delta: Int) =
-        updateSlot(dayIndex, slotIndex) {
+    fun changeReps(weekday: Int, slotIndex: Int, delta: Int) =
+        updateSlot(weekday, slotIndex) {
             val min = (it.repMin + delta).coerceIn(1, 30)
             val max = (it.repMax + delta).coerceIn(min, 30)
             it.copy(repMin = min, repMax = max)
         }
 
-    private fun updateSlot(dayIndex: Int, slotIndex: Int, block: (EditorSlot) -> EditorSlot) {
-        val current = days.toMutableList()
-        val day = current[dayIndex]
-        if (slotIndex !in day.slots.indices) return
-        val slots = day.slots.toMutableList()
-        slots[slotIndex] = block(slots[slotIndex])
-        current[dayIndex] = day.copy(slots = slots)
-        days = current
+    private fun updateSlot(weekday: Int, slotIndex: Int, block: (EditorSlot) -> EditorSlot) {
+        val list = slotMap[weekday].orEmpty().toMutableList()
+        if (slotIndex !in list.indices) return
+        list[slotIndex] = block(list[slotIndex])
+        slotMap[weekday] = list
+        rebuild()
     }
 
     fun canSave(): Boolean = name.isNotBlank() && days.any { it.slots.isNotEmpty() }
@@ -170,10 +168,11 @@ class PlanEditorViewModel(
             sessionMin = "30-60",
             weeklySets = days.sumOf { d -> d.slots.sumOf { it.sets } },
             note = "自定义计划",
+            weekdays = days.map { it.weekday },
             days = days.map { d ->
                 DayDto(
-                    zh = d.name,
-                    en = d.name,
+                    zh = weekdayZh(d.weekday),
+                    en = weekdayEn(d.weekday),
                     slots = d.slots.map { s ->
                         SlotDto(
                             ex = s.exId,
@@ -197,7 +196,13 @@ class PlanEditorViewModel(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+fun weekdayZh(index: Int): String =
+    listOf("周一", "周二", "周三", "周四", "周五", "周六", "周日").getOrElse(index) { "周一" }
+
+fun weekdayEn(index: Int): String =
+    listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun").getOrElse(index) { "Mon" }
+
+@OptIn(ExperimentalMaterial3Api::class, androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 @Composable
 fun PlanEditorScreen(
     planId: String?,
@@ -264,22 +269,42 @@ fun PlanEditorScreen(
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth()
                     )
-                    Spacer(Modifier.height(12.dp))
+                    Spacer(Modifier.height(14.dp))
                     Text(
-                        stringResource(R.string.plan_days_count),
-                        style = MaterialTheme.typography.labelMedium,
+                        stringResource(R.string.plan_weekdays_title),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                    Spacer(Modifier.height(2.dp))
+                    Text(
+                        stringResource(R.string.plan_weekdays_hint),
+                        style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
-                    Spacer(Modifier.height(6.dp))
-                    Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                        (2..6).forEach { n ->
+                    Spacer(Modifier.height(8.dp))
+                    androidx.compose.foundation.layout.FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        (0..6).forEach { wd ->
+                            val selected = wd in vm.weekdays
                             FilterChip(
-                                selected = vm.dayCount == n,
-                                onClick = { vm.updateDayCount(n) },
-                                label = { Text("$n") }
+                                selected = selected,
+                                onClick = { vm.toggleWeekday(wd) },
+                                label = {
+                                    Text(
+                                        if (isZh) weekdayZh(wd).removePrefix("周")
+                                        else weekdayEn(wd).take(1)
+                                    )
+                                }
                             )
                         }
                     }
+                    Spacer(Modifier.height(10.dp))
+                    Text(
+                        stringResource(R.string.plan_days_count, vm.days.size),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
 
@@ -292,11 +317,11 @@ fun PlanEditorScreen(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            day.name,
+                            if (isZh) weekdayZh(day.weekday) else weekdayEn(day.weekday),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.SemiBold
                         )
-                        TextButton(onClick = { pickerForDay = dayIndex }) {
+                        TextButton(onClick = { pickerForDay = day.weekday }) {
                             Text(stringResource(R.string.plan_add_exercise))
                         }
                     }
@@ -322,7 +347,7 @@ fun PlanEditorScreen(
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
-                            TextButton(onClick = { vm.removeSlot(dayIndex, slotIndex) }) {
+                            TextButton(onClick = { vm.removeSlot(day.weekday, slotIndex) }) {
                                 Text("✕", color = MaterialTheme.colorScheme.error)
                             }
                         }
@@ -333,13 +358,13 @@ fun PlanEditorScreen(
                         ) {
                             Stepper(
                                 value = "${slot.sets} ${if (isZh) "组" else "sets"}",
-                                onMinus = { vm.changeSets(dayIndex, slotIndex, -1) },
-                                onPlus = { vm.changeSets(dayIndex, slotIndex, 1) }
+                                onMinus = { vm.changeSets(day.weekday, slotIndex, -1) },
+                                onPlus = { vm.changeSets(day.weekday, slotIndex, 1) }
                             )
                             Stepper(
                                 value = "${slot.repMin}-${slot.repMax}",
-                                onMinus = { vm.changeReps(dayIndex, slotIndex, -1) },
-                                onPlus = { vm.changeReps(dayIndex, slotIndex, 1) }
+                                onMinus = { vm.changeReps(day.weekday, slotIndex, -1) },
+                                onPlus = { vm.changeReps(day.weekday, slotIndex, 1) }
                             )
                         }
                     }
@@ -348,20 +373,18 @@ fun PlanEditorScreen(
         }
     }
 
-    pickerForDay?.let { dayIndex ->
+    pickerForDay?.let { weekday ->
         ExercisePicker(
             exercises = vm.exercises,
             isZh = isZh,
             onDismiss = { pickerForDay = null },
             onPick = { ex ->
-                vm.addSlot(dayIndex, ex)
+                vm.addSlot(weekday, ex)
                 pickerForDay = null
             }
         )
     }
 }
-
-private fun dayLetter(index: Int): String = ('A' + (index - 1)).toString()
 
 private fun muscleLabel(key: String, isZh: Boolean): String {
     val zh = mapOf(

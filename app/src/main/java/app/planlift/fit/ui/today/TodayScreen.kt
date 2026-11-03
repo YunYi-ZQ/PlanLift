@@ -312,7 +312,7 @@ private fun trainingDayIndexes(daysPerWeek: Int): List<Int> = when (daysPerWeek)
 @Composable
 private fun WeekStrip(plan: PlanDto, weeklyDone: Int) {
     val today = java.time.LocalDate.now().dayOfWeek.value - 1
-    val training = trainingDayIndexes(plan.daysPerWeek)
+    val training = if (plan.weekdays.isNotEmpty()) plan.weekdays else trainingDayIndexes(plan.daysPerWeek)
     val labels = if (isChinese(java.util.Locale.getDefault().language)) DAY_LABELS_ZH else DAY_LABELS_EN
 
     SectionCard {

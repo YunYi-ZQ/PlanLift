@@ -1,13 +1,15 @@
 package app.planlift.fit.ui.settings
 
+import android.app.Activity
+import android.app.LocaleManager
 import android.os.Build
+import android.os.LocaleList
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,11 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.planlift.fit.R
+import app.planlift.fit.data.settings.AppLanguage
+import app.planlift.fit.data.settings.ColorStyle
+import app.planlift.fit.data.settings.FontStyle
 import app.planlift.fit.data.settings.ThemeMode
 import app.planlift.fit.data.settings.ThemePrefs
 import app.planlift.fit.ui.common.SectionCard
@@ -107,7 +112,7 @@ fun ThemeScreen(onBack: () -> Unit) {
                 }
             }
 
-            // 主题色
+            // 主题色 + 配色风格 + 动态取色
             SectionCard {
                 Text(
                     stringResource(R.string.theme_seed_title),
@@ -137,6 +142,31 @@ fun ThemeScreen(onBack: () -> Unit) {
                     }
                 }
 
+                Spacer(Modifier.height(14.dp))
+                Text(
+                    stringResource(R.string.theme_style_title),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    ColorStyle.entries.forEach { style ->
+                        FilterChip(
+                            selected = s.colorStyle == style,
+                            onClick = { ThemePrefs.update(ctx, s.copy(colorStyle = style)) },
+                            label = {
+                                Text(
+                                    when (style) {
+                                        ColorStyle.TONAL -> stringResource(R.string.style_tonal)
+                                        ColorStyle.VIBRANT -> stringResource(R.string.style_vibrant)
+                                        ColorStyle.NEUTRAL -> stringResource(R.string.style_neutral)
+                                        ColorStyle.EXPRESSIVE -> stringResource(R.string.style_expressive)
+                                    }
+                                )
+                            }
+                        )
+                    }
+                }
+
                 if (Build.VERSION.SDK_INT >= 31) {
                     Spacer(Modifier.height(8.dp))
                     Row(
@@ -163,32 +193,158 @@ fun ThemeScreen(onBack: () -> Unit) {
                 }
             }
 
-            // 纯黑
+            // 字体 + 文本缩放
             SectionCard {
-                Row(
-                    Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Column(Modifier.weight(1f)) {
-                        Text(
-                            stringResource(R.string.theme_pure_black_title),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.SemiBold
-                        )
-                        Text(
-                            stringResource(R.string.theme_pure_black_hint),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                Text(
+                    stringResource(R.string.theme_font_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FontStyle.entries.forEach { f ->
+                        FilterChip(
+                            selected = s.font == f,
+                            onClick = { ThemePrefs.update(ctx, s.copy(font = f)) },
+                            label = {
+                                Text(
+                                    when (f) {
+                                        FontStyle.SYSTEM -> stringResource(R.string.font_system)
+                                        FontStyle.SERIF -> stringResource(R.string.font_serif)
+                                        FontStyle.MONOSPACE -> stringResource(R.string.font_mono)
+                                        FontStyle.CURSIVE -> stringResource(R.string.font_cursive)
+                                    }
+                                )
+                            }
                         )
                     }
-                    Switch(
-                        checked = s.pureBlack,
-                        onCheckedChange = { ThemePrefs.update(ctx, s.copy(pureBlack = it)) }
-                    )
+                }
+
+                Spacer(Modifier.height(14.dp))
+                Text(
+                    stringResource(R.string.theme_text_scale_title),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Spacer(Modifier.height(8.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    listOf(0.9f, 1.0f, 1.15f, 1.3f).forEach { scale ->
+                        FilterChip(
+                            selected = kotlin.math.abs(s.textScale - scale) < 0.01f,
+                            onClick = { ThemePrefs.update(ctx, s.copy(textScale = scale)) },
+                            label = { Text("${(scale * 100).toInt()}%") }
+                        )
+                    }
+                }
+            }
+
+            // 交互与底栏
+            SectionCard {
+                ToggleRow(
+                    title = stringResource(R.string.theme_ripple_title),
+                    subtitle = stringResource(R.string.theme_ripple_hint),
+                    checked = s.ripple,
+                    onChange = { ThemePrefs.update(ctx, s.copy(ripple = it)) }
+                )
+                HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                ToggleRow(
+                    title = stringResource(R.string.theme_nav_floating_title),
+                    subtitle = stringResource(R.string.theme_nav_floating_hint),
+                    checked = s.navFloating,
+                    onChange = { ThemePrefs.update(ctx, s.copy(navFloating = it)) }
+                )
+                HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                ToggleRow(
+                    title = stringResource(R.string.theme_glass_title),
+                    subtitle = stringResource(R.string.theme_glass_hint),
+                    checked = s.glass,
+                    onChange = { ThemePrefs.update(ctx, s.copy(glass = it)) }
+                )
+                HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                ToggleRow(
+                    title = stringResource(R.string.theme_pure_black_title),
+                    subtitle = stringResource(R.string.theme_pure_black_hint),
+                    checked = s.pureBlack,
+                    onChange = { ThemePrefs.update(ctx, s.copy(pureBlack = it)) }
+                )
+            }
+
+            // 语言
+            SectionCard {
+                Text(
+                    stringResource(R.string.theme_language_title),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    stringResource(R.string.theme_language_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(10.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    AppLanguage.entries.forEach { lang ->
+                        FilterChip(
+                            selected = s.language == lang,
+                            onClick = {
+                                ThemePrefs.update(ctx, s.copy(language = lang))
+                                applyLanguage(ctx, lang)
+                            },
+                            label = {
+                                Text(
+                                    when (lang) {
+                                        AppLanguage.SYSTEM -> stringResource(R.string.lang_system)
+                                        AppLanguage.ZH -> "中文"
+                                        AppLanguage.EN -> "English"
+                                    }
+                                )
+                            }
+                        )
+                    }
                 }
             }
         }
+    }
+}
+
+/** Android 13+ 用系统 API 设应用语言；更早版本重建 Activity 由 attachBaseContext 生效 */
+private fun applyLanguage(ctx: android.content.Context, lang: AppLanguage) {
+    val tag = when (lang) {
+        AppLanguage.SYSTEM -> null
+        AppLanguage.ZH -> "zh"
+        AppLanguage.EN -> "en"
+    }
+    if (Build.VERSION.SDK_INT >= 33) {
+        val lm = ctx.getSystemService(LocaleManager::class.java)
+        lm.applicationLocales = if (tag == null) {
+            LocaleList.getEmptyLocaleList()
+        } else {
+            LocaleList.forLanguageTags(tag)
+        }
+    } else {
+        (ctx as? Activity)?.recreate()
+    }
+}
+
+@Composable
+private fun ToggleRow(title: String, subtitle: String, checked: Boolean, onChange: (Boolean) -> Unit) {
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .clickable { onChange(!checked) }
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Column(Modifier.weight(1f)) {
+            Text(title, style = MaterialTheme.typography.bodyLarge)
+            Text(
+                subtitle,
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
+        Switch(checked = checked, onCheckedChange = null)
     }
 }
 

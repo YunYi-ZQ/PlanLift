@@ -16,33 +16,7 @@
 > Task :app:processDebugManifestForPackage UP-TO-DATE
 > Task :app:processDebugResources UP-TO-DATE
 > Task :app:kspDebugKotlin
+> Task :app:compileDebugKotlin
 
-> Task :app:compileDebugKotlin FAILED
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/nav/AppNav.kt:152:21 No parameter with name 'onOpenTheme' found.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:57:45 Unresolved reference 'theme_preview_title'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:63:45 Unresolved reference 'theme_preview_heading'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:70:45 Unresolved reference 'theme_preview_body'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:76:73 Unresolved reference 'theme_preview_button'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:84:45 Unresolved reference 'theme_mode_title'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:111:45 Unresolved reference 'theme_seed_title'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:117:45 Unresolved reference 'theme_seed_hint'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:147:57 Unresolved reference 'theme_dynamic_title'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:151:57 Unresolved reference 'theme_dynamic_hint'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:173:53 Unresolved reference 'theme_pure_black_title'.
-e: file:///D:/Dev/PlanLift/app/src/main/java/app/planlift/fit/ui/settings/ThemeScreen.kt:178:53 Unresolved reference 'theme_pure_black_hint'.
-
-FAILURE: Build failed with an exception.
-
-* What went wrong:
-Execution failed for task ':app:compileDebugKotlin'.
-> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
-   > Compilation error. See log for more details
-
-* Try:
-> Run with --stacktrace option to get the stack trace.
-> Run with --info or --debug option to get more log output.
-> Run with --scan to get full insights.
-> Get more help at https://help.gradle.org.
-
-BUILD FAILED in 4s
+BUILD SUCCESSFUL in 7s
 15 actionable tasks: 2 executed, 13 up-to-date

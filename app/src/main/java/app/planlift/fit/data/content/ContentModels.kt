@@ -50,6 +50,8 @@ data class PlanDto(
     val sessionMin: String,
     val weeklySets: Int,
     val note: String = "",
+    /** 自定义计划用：训练日是周几（0=周一）。内置计划为空，按老规则推断 */
+    val weekdays: List<Int> = emptyList(),
     val days: List<DayDto>
 )
 

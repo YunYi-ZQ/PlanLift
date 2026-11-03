@@ -110,7 +110,7 @@
     <string name="plan_new_title">New custom plan</string>
     <string name="plan_edit_title">Edit plan</string>
     <string name="plan_name">Plan name</string>
-    <string name="plan_days_count">Training days per week</string>
+    <string name="plan_days_count">%1$d days per week · rest on the others</string>
     <string name="plan_add_exercise">+ Add exercise</string>
     <string name="plan_day_empty">No exercises yet for this day</string>
     <string name="plan_pick_exercise">Pick an exercise</string>
@@ -134,4 +134,26 @@
     <string name="plan_delete_confirm">Delete &quot;%1$s&quot;? This syncs to your other devices.</string>
     <string name="reminder_time_label">Reminder time</string>
     <string name="reminder_sample_body">Test notification: this is how your daily reminder will look</string>
+    <string name="plan_weekdays_title">Training days</string>
+    <string name="plan_weekdays_hint">Pick the days you train; the rest become rest days</string>
+    <string name="theme_style_title">Color style</string>
+    <string name="style_tonal">Tonal</string>
+    <string name="style_vibrant">Vibrant</string>
+    <string name="style_neutral">Neutral</string>
+    <string name="style_expressive">Expressive</string>
+    <string name="theme_font_title">Font</string>
+    <string name="font_system">Default</string>
+    <string name="font_serif">Serif</string>
+    <string name="font_mono">Mono</string>
+    <string name="font_cursive">Cursive</string>
+    <string name="theme_text_scale_title">Text size</string>
+    <string name="theme_ripple_title">Tap animation</string>
+    <string name="theme_ripple_hint">Turn off to disable the ripple feedback</string>
+    <string name="theme_nav_floating_title">Floating nav bar</string>
+    <string name="theme_nav_floating_hint">Bottom bar floats above content</string>
+    <string name="theme_glass_title">Liquid glass</string>
+    <string name="theme_glass_hint">Translucent bars and cards with a border</string>
+    <string name="theme_language_title">Language</string>
+    <string name="theme_language_hint">Interface reloads immediately</string>
+    <string name="lang_system">System</string>
 </resources>

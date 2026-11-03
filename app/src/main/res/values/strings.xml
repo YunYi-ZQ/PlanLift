@@ -110,7 +110,7 @@
     <string name="plan_new_title">新建自定义计划</string>
     <string name="plan_edit_title">编辑计划</string>
     <string name="plan_name">计划名称</string>
-    <string name="plan_days_count">每周训练天数</string>
+    <string name="plan_days_count">每周 %1$d 天 · 其余为休息日</string>
     <string name="plan_add_exercise">＋ 添加动作</string>
     <string name="plan_day_empty">这一天还没有动作</string>
     <string name="plan_pick_exercise">选择动作</string>
@@ -134,4 +134,26 @@
     <string name="plan_delete_confirm">删除「%1$s」？该操作会同步到其他设备。</string>
     <string name="reminder_time_label">提醒时间</string>
     <string name="reminder_sample_body">这是一条测试通知：今天该练哪个课表，到点就会这样提醒你</string>
+    <string name="plan_weekdays_title">训练日</string>
+    <string name="plan_weekdays_hint">选中哪天就练哪天，没选的自动算休息日</string>
+    <string name="theme_style_title">配色风格</string>
+    <string name="style_tonal">柔和</string>
+    <string name="style_vibrant">鲜艳</string>
+    <string name="style_neutral">中性</string>
+    <string name="style_expressive">强调</string>
+    <string name="theme_font_title">字体</string>
+    <string name="font_system">默认</string>
+    <string name="font_serif">衬线</string>
+    <string name="font_mono">等宽</string>
+    <string name="font_cursive">手写</string>
+    <string name="theme_text_scale_title">文本缩放</string>
+    <string name="theme_ripple_title">点击动画</string>
+    <string name="theme_ripple_hint">关闭后按钮不再有水波纹反馈</string>
+    <string name="theme_nav_floating_title">悬浮底栏</string>
+    <string name="theme_nav_floating_hint">底栏浮在内容上方，四周留白</string>
+    <string name="theme_glass_title">液态玻璃</string>
+    <string name="theme_glass_hint">底栏与卡片半透明并带描边</string>
+    <string name="theme_language_title">语言</string>
+    <string name="theme_language_hint">切换后界面立即重载</string>
+    <string name="lang_system">跟随系统</string>
 </resources>

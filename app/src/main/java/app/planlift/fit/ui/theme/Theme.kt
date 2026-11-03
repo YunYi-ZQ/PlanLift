@@ -4,32 +4,53 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.core.view.WindowCompat
+import app.planlift.fit.data.settings.ColorStyle
+import app.planlift.fit.data.settings.FontStyle
 
 private fun Color.tone(white: Float): Color = lerp(this, Color.White, white)
 private fun Color.shade(black: Float): Color = lerp(this, Color.Black, black)
 
-/**
- * 从种子色生成一套明/暗配色。
- * 不是完整的 Material Color Utilities，但足以保证主色、容器色、描边色协调。
- */
-private fun schemeFrom(seed: Color, dark: Boolean) = if (dark) {
+/** 按风格调整种子色的「浓度」；返回用于生成配色的实际主色 */
+private fun applyStyle(seed: Color, style: ColorStyle): Color = when (style) {
+    ColorStyle.TONAL -> seed
+    // 鲜艳：提高饱和度
+    ColorStyle.VIBRANT -> saturate(seed, 1.35f)
+    // 中性：向灰色靠拢
+    ColorStyle.NEUTRAL -> lerp(seed, Color(0xFF8A8F98), 0.55f)
+    // 强调：更深的对比
+    ColorStyle.EXPRESSIVE -> saturate(seed, 1.15f).shade(0.12f)
+}
+
+private fun saturate(c: Color, factor: Float): Color {
+    val hsv = FloatArray(3)
+    android.graphics.Color.colorToHSV(c.toArgb(), hsv)
+    hsv[1] = (hsv[1] * factor).coerceIn(0f, 1f)
+    return Color(android.graphics.Color.HSVToColor(android.graphics.Color.alpha(c.toArgb()), hsv))
+}
+
+private fun schemeFrom(seed: Color, dark: Boolean, style: ColorStyle) = if (dark) {
     val primary = seed.tone(0.55f)
     darkColorScheme(
         primary = primary,
         onPrimary = Color(0xFF06121F),
-        primaryContainer = seed.shade(0.55f),
+        primaryContainer = seed.shade(if (style == ColorStyle.EXPRESSIVE) 0.35f else 0.55f),
         onPrimaryContainer = seed.tone(0.75f),
         secondary = seed.tone(0.35f),
         onSecondary = Color(0xFF0B1220),
@@ -66,19 +87,52 @@ private fun schemeFrom(seed: Color, dark: Boolean) = if (dark) {
     )
 }
 
+private fun FontFamily.of(style: FontStyle): FontFamily = when (style) {
+    FontStyle.SYSTEM -> FontFamily.Default
+    FontStyle.SERIF -> FontFamily.Serif
+    FontStyle.MONOSPACE -> FontFamily.Monospace
+    FontStyle.CURSIVE -> FontFamily.Cursive
+}
+
+private fun typographyFor(font: FontFamily): Typography {
+    val base = Typography()
+    fun TextStyle.f() = copy(fontFamily = font)
+    return Typography(
+        displayLarge = base.displayLarge.f(),
+        displayMedium = base.displayMedium.f(),
+        displaySmall = base.displaySmall.f(),
+        headlineLarge = base.headlineLarge.f(),
+        headlineMedium = base.headlineMedium.f(),
+        headlineSmall = base.headlineSmall.f(),
+        titleLarge = base.titleLarge.f(),
+        titleMedium = base.titleMedium.f(),
+        titleSmall = base.titleSmall.f(),
+        bodyLarge = base.bodyLarge.f(),
+        bodyMedium = base.bodyMedium.f(),
+        bodySmall = base.bodySmall.f(),
+        labelLarge = base.labelLarge.f(),
+        labelMedium = base.labelMedium.f(),
+        labelSmall = base.labelSmall.f()
+    )
+}
+
 @Composable
 fun PlanLiftTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     seed: Color = Color(0xFF38BDF8),
     dynamic: Boolean = false,
     pureBlack: Boolean = false,
+    colorStyle: ColorStyle = ColorStyle.TONAL,
+    fontStyle: FontStyle = FontStyle.SYSTEM,
+    textScale: Float = 1.0f,
+    ripple: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current
     var colors = if (dynamic && Build.VERSION.SDK_INT >= 31) {
         if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
     } else {
-        schemeFrom(seed, darkTheme)
+        schemeFrom(applyStyle(seed, colorStyle), darkTheme, colorStyle)
     }
 
     if (darkTheme && pureBlack) {
@@ -98,5 +152,32 @@ fun PlanLiftTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme
         }
     }
-    MaterialTheme(colorScheme = colors, content = content)
+
+    val density = LocalDensity.current
+    val scaled = if (textScale == 1.0f) {
+        density
+    } else {
+        androidx.compose.ui.unit.Density(density.density, density.fontScale * textScale)
+    }
+
+    if (ripple) {
+        CompositionLocalProvider(LocalDensity provides scaled) {
+            MaterialTheme(
+                colorScheme = colors,
+                typography = typographyFor(FontFamily.Default.of(fontStyle))
+            ) { content() }
+        }
+    } else {
+        @OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
+        CompositionLocalProvider(
+            LocalDensity provides scaled,
+            androidx.compose.material3.LocalRippleConfiguration provides
+                androidx.compose.material3.RippleConfiguration(color = Color.Transparent)
+        ) {
+            MaterialTheme(
+                colorScheme = colors,
+                typography = typographyFor(FontFamily.Default.of(fontStyle))
+            ) { content() }
+        }
+    }
 }
