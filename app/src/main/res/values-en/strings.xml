@@ -118,4 +118,20 @@
     <string name="plan_sets_reps">%1$d sets × %2$d-%3$d reps</string>
     <string name="plan_save">Save plan</string>
     <string name="plan_delete">Delete plan</string>
+    <string name="theme_preview_title">Live preview</string>
+    <string name="theme_preview_heading">Today: Full Body A</string>
+    <string name="theme_preview_body">Primary, container and outline all follow the seed color</string>
+    <string name="theme_preview_button">Start workout</string>
+    <string name="theme_mode_title">Theme mode</string>
+    <string name="theme_seed_title">Accent color</string>
+    <string name="theme_seed_hint">Pick a seed color; the whole palette is derived from it</string>
+    <string name="theme_dynamic_title">Use wallpaper colors</string>
+    <string name="theme_dynamic_hint">Android 12+; overrides the accent above</string>
+    <string name="theme_pure_black_title">Pure black</string>
+    <string name="theme_pure_black_hint">Black background in dark mode, saves power on OLED</string>
+    <string name="plan_section_official">Official plans · %1$d</string>
+    <string name="plan_section_custom">My plans · %1$d</string>
+    <string name="plan_delete_confirm">Delete &quot;%1$s&quot;? This syncs to your other devices.</string>
+    <string name="reminder_time_label">Reminder time</string>
+    <string name="reminder_sample_body">Test notification: this is how your daily reminder will look</string>
 </resources>

@@ -42,6 +42,11 @@ class PlanListViewModel(container: AppContainer) : ViewModel() {
 
     /** 返回列表时调用，保证新建/删除自定义计划后立刻可见 */
     fun refresh() = viewModelScope.launch { _plans.value = repo.plans() }
+
+    fun delete(id: String) = viewModelScope.launch {
+        repo.deleteCustomPlan(id)
+        _plans.value = repo.plans()
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -57,6 +62,8 @@ fun PlanListScreen(
     val exactDays by vm.exactDays.collectAsState()
 
     androidx.compose.runtime.LaunchedEffect(Unit) { vm.refresh() }
+
+    var pendingDelete by remember { mutableStateOf<PlanDto?>(null) }
 
     val filtered = plans.filter { p ->
         (gender == GenderFilter.ALL ||
@@ -148,12 +155,102 @@ fun PlanListScreen(
                         Text("＋ " + stringResource(R.string.plan_new_title))
                     }
                 }
-                items(filtered, key = { it.id }) { plan ->
-                    PlanCard(plan, isZh) { onOpenPlan(plan.id) }
+
+                val official = filtered.filter { it.gender != "custom" }
+                val customPlans = filtered.filter { it.gender == "custom" }
+
+                if (official.isNotEmpty()) {
+                    item {
+                        Text(
+                            stringResource(R.string.plan_section_official, official.size),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(top = 6.dp, bottom = 2.dp)
+                        )
+                    }
+                    items(official, key = { it.id }) { plan ->
+                        PlanCard(plan, isZh) { onOpenPlan(plan.id) }
+                    }
+                }
+
+                if (customPlans.isNotEmpty()) {
+                    item {
+                        Text(
+                            stringResource(R.string.plan_section_custom, customPlans.size),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.padding(top = 12.dp, bottom = 2.dp)
+                        )
+                    }
+                    items(customPlans, key = { it.id }) { plan ->
+                        SwipeToDeleteRow(onDelete = { pendingDelete = plan }) {
+                            PlanCard(plan, isZh) { onOpenPlan(plan.id) }
+                        }
+                    }
                 }
             }
         }
     }
+
+    pendingDelete?.let { plan ->
+        AlertDialog(
+            onDismissRequest = { pendingDelete = null },
+            title = { Text(stringResource(R.string.plan_delete)) },
+            text = { Text(stringResource(R.string.plan_delete_confirm, plan.zh)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    vm.delete(plan.id)
+                    pendingDelete = null
+                }) {
+                    Text(
+                        stringResource(R.string.action_confirm),
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { pendingDelete = null }) {
+                    Text(stringResource(R.string.action_cancel))
+                }
+            }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun SwipeToDeleteRow(
+    onDelete: () -> Unit,
+    content: @Composable () -> Unit
+) {
+    val state = rememberSwipeToDismissBoxState(
+        confirmValueChange = { value ->
+            if (value == SwipeToDismissBoxValue.EndToStart) onDelete()
+            false
+        }
+    )
+    SwipeToDismissBox(
+        state = state,
+        enableDismissFromStartToEnd = false,
+        backgroundContent = {
+            Box(
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        MaterialTheme.colorScheme.errorContainer,
+                        MaterialTheme.shapes.large
+                    ),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                Text(
+                    stringResource(R.string.plan_delete),
+                    color = MaterialTheme.colorScheme.onErrorContainer,
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(end = 24.dp)
+                )
+            }
+        }
+    ) { content() }
 }
 
 @Composable

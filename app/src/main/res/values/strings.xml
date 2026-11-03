@@ -118,4 +118,20 @@
     <string name="plan_sets_reps">%1$d 组 × %2$d-%3$d 次</string>
     <string name="plan_save">保存计划</string>
     <string name="plan_delete">删除计划</string>
+    <string name="theme_preview_title">实时预览</string>
+    <string name="theme_preview_heading">今日训练 · 全身 A</string>
+    <string name="theme_preview_body">主色、容器色与描边会随主题色一起变化</string>
+    <string name="theme_preview_button">开始训练</string>
+    <string name="theme_mode_title">主题模式</string>
+    <string name="theme_seed_title">主题色</string>
+    <string name="theme_seed_hint">选一个耐看的种子色，整套配色由它生成</string>
+    <string name="theme_dynamic_title">跟随壁纸取色</string>
+    <string name="theme_dynamic_hint">Android 12 及以上，开启后忽略上面的主题色</string>
+    <string name="theme_pure_black_title">纯黑模式</string>
+    <string name="theme_pure_black_hint">深色下背景改为纯黑，OLED 更省电</string>
+    <string name="plan_section_official">官方计划 · %1$d 套</string>
+    <string name="plan_section_custom">我的计划 · %1$d 套</string>
+    <string name="plan_delete_confirm">删除「%1$s」？该操作会同步到其他设备。</string>
+    <string name="reminder_time_label">提醒时间</string>
+    <string name="reminder_sample_body">这是一条测试通知：今天该练哪个课表，到点就会这样提醒你</string>
 </resources>

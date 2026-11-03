@@ -26,15 +26,24 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
     override suspend fun doWork(): Result {
         val app = applicationContext as? PlanLiftApp ?: return Result.success()
         val repo = app.container.repo
-        val enrollment = repo.activeEnrollmentOnce() ?: return Result.success()
-        val plan = repo.plan(enrollment.planId) ?: return Result.success()
-        val index = repo.nextDayIndex(plan, enrollment)
-        val day = plan.days.getOrNull(index) ?: return Result.success()
+        val force = inputData.getBoolean(KEY_FORCE, false)
+
+        val enrollment = repo.activeEnrollmentOnce()
+        val plan = enrollment?.let { repo.plan(it.planId) }
+        val day = if (enrollment != null && plan != null) {
+            plan.days.getOrNull(repo.nextDayIndex(plan, enrollment))
+        } else null
+
+        if (day == null && !force) return Result.success()
 
         notify(
             applicationContext,
             applicationContext.getString(R.string.reminder_title),
-            applicationContext.getString(R.string.reminder_body, day.zh, plan.zh)
+            if (day != null && plan != null) {
+                applicationContext.getString(R.string.reminder_body, day.zh, plan.zh)
+            } else {
+                applicationContext.getString(R.string.reminder_sample_body)
+            }
         )
         return Result.success()
     }
@@ -70,12 +79,30 @@ class ReminderWorker(context: Context, params: WorkerParameters) : CoroutineWork
         const val CHANNEL_ID = "planlift_reminder"
         const val NOTIFY_ID = 1001
         const val WORK_NAME = "planlift_daily_reminder"
+        const val KEY_FORCE = "force"
     }
 }
 
 object ReminderScheduler {
     private const val PREFS = "planlift_prefs"
     private const val KEY = "reminder_enabled"
+    private const val KEY_HOUR = "reminder_hour"
+    private const val KEY_MINUTE = "reminder_minute"
+
+    fun hour(context: Context): Int =
+        context.getSharedPreferences(PREFS, 0).getInt(KEY_HOUR, 18)
+
+    fun minute(context: Context): Int =
+        context.getSharedPreferences(PREFS, 0).getInt(KEY_MINUTE, 0)
+
+    /** 修改提醒时间：已在运行的话重新排期 */
+    fun setTime(context: Context, hour: Int, minute: Int) {
+        context.getSharedPreferences(PREFS, 0).edit()
+            .putInt(KEY_HOUR, hour)
+            .putInt(KEY_MINUTE, minute)
+            .apply()
+        if (isEnabled(context)) schedule(context)
+    }
 
     fun isEnabled(context: Context): Boolean =
         context.getSharedPreferences(PREFS, 0).getBoolean(KEY, false)
@@ -88,8 +115,8 @@ object ReminderScheduler {
     fun schedule(context: Context) {
         val now = Calendar.getInstance()
         val target = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 18)
-            set(Calendar.MINUTE, 0)
+            set(Calendar.HOUR_OF_DAY, hour(context))
+            set(Calendar.MINUTE, minute(context))
             set(Calendar.SECOND, 0)
             if (before(now)) add(Calendar.DAY_OF_YEAR, 1)
         }
@@ -106,9 +133,11 @@ object ReminderScheduler {
         )
     }
 
-    /** 立即执行一次（调试自检 / 预览通知长什么样） */
+    /** 立即执行一次（调试自检 / 预览通知长什么样）。没有计划时也发，方便验证通知本身。 */
     fun runNow(context: Context) {
-        val request = androidx.work.OneTimeWorkRequestBuilder<ReminderWorker>().build()
+        val request = androidx.work.OneTimeWorkRequestBuilder<ReminderWorker>()
+            .setInputData(androidx.work.workDataOf(ReminderWorker.KEY_FORCE to true))
+            .build()
         WorkManager.getInstance(context).enqueue(request)
     }
 

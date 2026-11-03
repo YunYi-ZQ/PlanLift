@@ -14,8 +14,8 @@ android {
         applicationId = "app.planlift.fit"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.1.0"
+        versionCode = 7
+        versionName = "1.2.0"
 
         resourceConfigurations += listOf("zh", "en")
         ndk { abiFilters += listOf("arm64-v8a") }

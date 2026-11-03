@@ -24,6 +24,7 @@ import app.planlift.fit.ui.progress.ProgressScreen
 import app.planlift.fit.ui.settings.ExportScreen
 import app.planlift.fit.ui.settings.SettingsScreen
 import app.planlift.fit.ui.settings.SyncScreen
+import app.planlift.fit.ui.settings.ThemeScreen
 import app.planlift.fit.ui.today.TodayScreen
 import app.planlift.fit.ui.workout.WorkoutScreen
 
@@ -35,6 +36,7 @@ object Routes {
     const val SETTINGS = "settings"
     const val SETTINGS_SYNC = "settings/sync"
     const val SETTINGS_EXPORT = "settings/export"
+    const val SETTINGS_THEME = "settings/theme"
     const val PLAN_DETAIL = "plan/{planId}"
     const val PLAN_EDIT = "plan_edit/{planId}"
     const val WORKOUT = "workout/{dayIndex}"
@@ -146,7 +148,8 @@ fun AppNav() {
                 SettingsScreen(
                     isZh = isZh,
                     onOpenSync = { navController.navigate(Routes.SETTINGS_SYNC) },
-                    onOpenExport = { navController.navigate(Routes.SETTINGS_EXPORT) }
+                    onOpenExport = { navController.navigate(Routes.SETTINGS_EXPORT) },
+                    onOpenTheme = { navController.navigate(Routes.SETTINGS_THEME) }
                 )
             }
             composable(Routes.SETTINGS_SYNC) {
@@ -154,6 +157,9 @@ fun AppNav() {
             }
             composable(Routes.SETTINGS_EXPORT) {
                 ExportScreen(onBack = { navController.popBackStack() })
+            }
+            composable(Routes.SETTINGS_THEME) {
+                ThemeScreen(onBack = { navController.popBackStack() })
             }
         }
     }

@@ -1,6 +1,10 @@
 package app.planlift.fit.ui.settings
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import app.planlift.fit.BuildConfig
 import app.planlift.fit.R
 import app.planlift.fit.data.reminder.ReminderScheduler
@@ -25,17 +30,37 @@ import app.planlift.fit.ui.common.SectionCard
 fun SettingsScreen(
     isZh: Boolean,
     onOpenSync: () -> Unit,
-    onOpenExport: () -> Unit
+    onOpenExport: () -> Unit,
+    onOpenTheme: () -> Unit
 ) {
     val ctx = LocalContext.current
-    var showTheme by remember { mutableStateOf(false) }
     var reminder by remember { mutableStateOf(ReminderScheduler.isEnabled(ctx)) }
-    val themeMode by ThemePrefs.mode.collectAsState()
+    var hour by remember { mutableIntStateOf(ReminderScheduler.hour(ctx)) }
+    var minute by remember { mutableIntStateOf(ReminderScheduler.minute(ctx)) }
+    var showTimePicker by remember { mutableStateOf(false) }
+    var testStatus by remember { mutableStateOf("") }
+    val themeSettings by ThemePrefs.state.collectAsState()
 
-    val themeLabel = when (themeMode) {
+    val themeLabel = when (themeSettings.mode) {
         ThemeMode.SYSTEM -> stringResource(R.string.theme_system)
         ThemeMode.LIGHT -> stringResource(R.string.theme_light)
         ThemeMode.DARK -> stringResource(R.string.theme_dark)
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        if (granted) {
+            ReminderScheduler.setEnabled(ctx, true)
+            reminder = true
+        }
+    }
+
+    fun ensurePermissionThen(action: () -> Unit) {
+        val granted = Build.VERSION.SDK_INT < 33 ||
+            ContextCompat.checkSelfPermission(ctx, Manifest.permission.POST_NOTIFICATIONS) ==
+            PackageManager.PERMISSION_GRANTED
+        if (granted) action() else permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 
     Scaffold(
@@ -63,7 +88,7 @@ fun SettingsScreen(
                 MenuRow(
                     title = stringResource(R.string.theme_title),
                     subtitle = themeLabel,
-                    onClick = { showTheme = true }
+                    onClick = onOpenTheme
                 )
                 HorizontalDivider(Modifier.padding(vertical = 6.dp))
                 MenuRow(
@@ -94,10 +119,35 @@ fun SettingsScreen(
                     Switch(
                         checked = reminder,
                         onCheckedChange = { on ->
-                            ReminderScheduler.setEnabled(ctx, on)
-                            reminder = on
+                            if (on) ensurePermissionThen {
+                                ReminderScheduler.setEnabled(ctx, true)
+                                reminder = true
+                            } else {
+                                ReminderScheduler.setEnabled(ctx, false)
+                                reminder = false
+                            }
                         }
                     )
+                }
+                if (reminder) {
+                    HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                    Row(
+                        Modifier
+                            .fillMaxWidth()
+                            .clickable { showTimePicker = true },
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            stringResource(R.string.reminder_time_label),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
+                        Text(
+                            "%02d:%02d".format(hour, minute),
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
                 }
             }
 
@@ -108,12 +158,26 @@ fun SettingsScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(
-                            stringResource(R.string.debug_notify),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                        TextButton(onClick = { ReminderScheduler.runNow(ctx) }) {
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                stringResource(R.string.debug_notify),
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                            if (testStatus.isNotEmpty()) {
+                                Text(
+                                    testStatus,
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+                        TextButton(onClick = {
+                            ensurePermissionThen {
+                                ReminderScheduler.runNow(ctx)
+                                testStatus = "已发送测试通知"
+                            }
+                        }) {
                             Text(stringResource(R.string.debug_trigger))
                         }
                     }
@@ -149,25 +213,26 @@ fun SettingsScreen(
         }
     }
 
-    if (showTheme) {
+    if (showTimePicker) {
+        val pickerState = rememberTimePickerState(
+            initialHour = hour,
+            initialMinute = minute,
+            is24Hour = true
+        )
         AlertDialog(
-            onDismissRequest = { showTheme = false },
-            title = { Text(stringResource(R.string.theme_title)) },
-            text = {
-                Column {
-                    ThemeOption(stringResource(R.string.theme_system), themeMode == ThemeMode.SYSTEM) {
-                        ThemePrefs.set(ctx, ThemeMode.SYSTEM); showTheme = false
-                    }
-                    ThemeOption(stringResource(R.string.theme_light), themeMode == ThemeMode.LIGHT) {
-                        ThemePrefs.set(ctx, ThemeMode.LIGHT); showTheme = false
-                    }
-                    ThemeOption(stringResource(R.string.theme_dark), themeMode == ThemeMode.DARK) {
-                        ThemePrefs.set(ctx, ThemeMode.DARK); showTheme = false
-                    }
-                }
-            },
+            onDismissRequest = { showTimePicker = false },
+            title = { Text(stringResource(R.string.reminder_time_label)) },
+            text = { TimePicker(state = pickerState) },
             confirmButton = {
-                TextButton(onClick = { showTheme = false }) {
+                TextButton(onClick = {
+                    hour = pickerState.hour
+                    minute = pickerState.minute
+                    ReminderScheduler.setTime(ctx, hour, minute)
+                    showTimePicker = false
+                }) { Text(stringResource(R.string.action_confirm)) }
+            },
+            dismissButton = {
+                TextButton(onClick = { showTimePicker = false }) {
                     Text(stringResource(R.string.action_cancel))
                 }
             }
@@ -195,20 +260,5 @@ private fun MenuRow(title: String, subtitle: String, onClick: () -> Unit) {
             )
         }
         Text("›", style = MaterialTheme.typography.titleLarge, color = MaterialTheme.colorScheme.outline)
-    }
-}
-
-@Composable
-private fun ThemeOption(label: String, selected: Boolean, onClick: () -> Unit) {
-    Row(
-        Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        RadioButton(selected = selected, onClick = onClick)
-        Spacer(Modifier.width(8.dp))
-        Text(label, style = MaterialTheme.typography.bodyLarge)
     }
 }
